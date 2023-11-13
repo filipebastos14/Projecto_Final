@@ -1,0 +1,17 @@
+main{
+    width: 50%;
+    margin: auto;
+}
+
+table{
+    margin: auto;
+}
+
+table, th, thead {
+    padding: 10px;
+    border: 1px solid black;
+}
+
+h2{
+    margin-bottom: 0;
+}

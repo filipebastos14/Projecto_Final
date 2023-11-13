@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Homepage</title>
+</head>
+<body>
+    <h1>Utilizador</h1>
+    <br>
+
+    <h2>Nome: <%= nome %></h2>
+    <h2>Email: <%= email %></h2>
+    <h2>Saldo: <%= saldo %></h2>
+
+    <br>
+    <hr>
+    <br>
+
+    <h1>movimentos</h1>
+    <br>
+
+    <% for (let movimento of movimentos) { %>
+        <h2>categoria: <%= movimento.categoria %><br>Descrição: <%= movimento.descricao %><br>valor: <%= movimento.valor %>€<br>Data: <%= movimento.data %></h2>
+    <% } %>
+
+</body>
+</html>
