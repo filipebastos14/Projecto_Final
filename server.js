@@ -1,23 +1,26 @@
 const express = require('express');
 const mysql = require('mysql');
 const bodyParser = require('body-parser')
+const cors = require('cors');
+
 
 const ejs = require('ejs');
 const path = require('path');
 const port = 3000;
 
 const app = express();
-
+app.use(cors({
+    origin: '*'
+}));
 app.use(express.json());
-//app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.urlencoded({ extended : false }))
+app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('public'));
 
 const con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "",
-    database: "testepf",
+    password: "route",
+    database: "projecto_final",
     port: "3306"
 })
 
@@ -37,7 +40,7 @@ app.get('/login', (req,res) => {
 })
 
 // Teste render
-app.get('/', (req, res) => {
+app.get('/', cors(), (req, res) => {
     const dados = require('./models/user.json');
     console.log(dados);
     if (dados.email == null) {
@@ -56,7 +59,7 @@ const db = DbConnect.getDbConnectInstance();
 const userModel = require('./controllers/userController');
 const userModelFunctions = userModel.getUserInstance();
 
-app.post('/user/new', (req,res) => {
+app.post('/user/new', cors(), (req,res) => {
     let object = req.body;
     const result = db.registarUtilizador(object)
 
@@ -65,16 +68,18 @@ app.post('/user/new', (req,res) => {
 })
 
 
-app.get('/user/login/', (req,res) => {
-    const email = req.query.email;
-    const pass = req.query.pass;
-    let query = "select id,nome,email,pass from utilizador where email = ?"
- 
+app.post('/user/login/', cors(), (req,res) => {
+    console.log('body', req.body)
+    const email = req.body.email;
+    const pass = req.body.pass;
+    let query = `select id,nome,email,pass from utilizador where email = '${email}'`
+    console.log(query)
         con.query(query,email,(err,result) => {
             if (err) {
                 console.log(err.message);
                 res.status(500).send("Internal Server Error");
             } else {
+                console.log('Result: ', result)
                 if (result.length > 0) {
                     const user = result[0];
     
@@ -127,24 +132,24 @@ app.get('/user/login/', (req,res) => {
         })
 })
 
-app.post('/mov/new', (req,res) => {
+app.post('/mov/new', cors(), (req,res) => {
     let object = req.body;
     const result = db.novoMovimento(object)
 })
 
-app.get('/user/mov',(req,res) => {
+app.get('/user/mov', cors(),(req,res) => {
     const id = req.query.id
     const result = db.verMovimento(id)
 
     return result
 })
 
-app.get('/logout', (req,res) => {
+app.get('/logout', cors(), (req,res) => {
     userModelFunctions.logout()
 
     res.render('index')
 })
 
-app.listen(port, () => {
+app.listen(port, cors(), () => {
     console.log("Connected");
 })

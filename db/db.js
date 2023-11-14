@@ -4,10 +4,10 @@ const bodyParser = require('body-parser');
 let instance = null;
 
 const con = mysql.createConnection({
-    host: "localhost",
+    host: "127.0.0.1",
     user: "root",
-    password: "",
-    database: "testepf",
+    password: "route",
+    database: "projecto_final",
     port: "3306"
 })
 
@@ -17,6 +17,8 @@ con.connect((err) => {
     }
     console.log("DB: " + con.state);
 })
+
+
 
 // function verificarDuplicado(email) {
 //     app.get('',(req,res) => {
@@ -39,14 +41,6 @@ class DbConnect {
     async registarUtilizador(object) {
         try {
             let result = await new Promise((resolve, reject) => {
-
-                // duplicado = verificarDuplicado([object.email])
-                // console.log(duplicado);
-
-                // if (duplicado) {
-                //     reject(console.log('Já existe utilizador'))
-                // }
-
                 let query = "insert into utilizador(nome,email,pass) values (?)"
                 let convertedObject = [[object.nome,object.email,object.pass]]
 

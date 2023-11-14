@@ -96,11 +96,12 @@ submitButton.addEventListener('click', (e) => {
     let form = new FormData(formData);
     let fixo = document.querySelector('#fixoInput');
     let movimento = {
+        user: '1',
         descricao: form.get('descricao'),
         valor: form.get('valor'),
         data: form.get('data'),
         categoria: form.get('categorias'),
-        fixo: fixo.checked,
+        //fixo: fixo.checked,
         tipo: form.get('tipo'),
     }
 
@@ -108,7 +109,7 @@ submitButton.addEventListener('click', (e) => {
 
     axios({
         method: 'post',
-        url: 'http://localhost:3000/inserirMovimento',
+        url: 'http://localhost:3000/mov/new',
         data: movimento
     })
         .then(function (response) {
