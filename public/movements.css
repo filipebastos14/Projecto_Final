@@ -17,72 +17,55 @@
     justify-content: end;
 }
 
-.grid{
+.transactionsGrid{
     display: grid;
     grid-template-columns: auto auto;
     grid-template-rows: auto auto auto;
-    gap: 1rem;
+    gap: 2rem;
 }
 
-.grid > div {
+.transactionsGrid > div {
     background: rgba(175, 175, 175, 0.116);
     border-radius: 5px;
     padding: 1rem;
 }
 
-.saldoConta{
+.newTransaction{
     grid-column-start: 1;
     grid-column-end: 2;
     grid-row-start: 1;
     grid-row-end: 2;
-
-    display: flex;
-    align-items: center;
-    gap: 1rem;
 }
 
-.estatisticasHomepage{
+.newCategory{
     grid-column-start: 1;
     grid-column-end: 2;
     grid-row-start: 2;
     grid-row-end: 3;
 }
 
-.ultimosMovimentosHomepage{
+.upcomingTransactions{
+    grid-column-start: 1;
+    grid-column-end: 2;
+    grid-row-start: 3;
+    grid-row-end: 4;
+}
+
+.lastTransactions{
     grid-column-start: 2;
     grid-column-end: 3;
     grid-row-start: 1;
     grid-row-end: 3;
 }
 
-.ultimosMovimentosHomepage > h4{
-    text-align: center;
-}
-
-.ultimosMovimentosHomepage > div {
-    overflow-y: scroll; 
-    max-height: 100%;
-    
-}
-
-.seccaoNoticias{
-    grid-column-start: 1;
+.everyMonthTransactions{
+    grid-column-start: 2;
     grid-column-end: 3;
     grid-row-start: 3;
     grid-row-end: 4;
-
-    display: flex;
-    gap: 1rem;
 }
 
-.brandName{
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    padding-left: 5rem;
-}
-
-.brandName > div {
-    display: flex;
-    align-items: center;
+.lastTransactions > div {
+    overflow-y: scroll; 
+    max-height: 600px;
 }

@@ -1,0 +1,39 @@
+.logoTitle{
+    padding: 0;
+    margin: 0;
+}
+
+.centerDivNav{
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+#navTitle{
+    justify-content: center;
+}
+
+#rightMenuDiv{
+    justify-content: end;
+}
+
+.gridAccounts{
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto;
+    gap: 3rem;
+}
+
+.account1Details{
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 1;
+    grid-row-end: 2;
+}
+
+.account2Details{
+    grid-column-start: 1;
+    grid-column-end: 3;
+    grid-row-start: 2;
+    grid-row-end: 3;
+}
