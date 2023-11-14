@@ -1,0 +1,69 @@
+.logoTitle{
+    padding: 0;
+    margin: 0;
+}
+
+.centerDivNav{
+    height: 100%;
+    display: flex;
+    align-items: center;
+}
+
+#navTitle{
+    justify-content: center;
+}
+
+#rightMenuDiv{
+    justify-content: end;
+}
+
+.row{
+    max-height: 100;
+}
+
+
+.CategoryAnualSpendings{
+    ??
+}
+
+
+#monthlySpendingsHeight{
+    height: 25rem;
+}
+
+.monthlySpendings{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    height: 50%;
+    width: 50%;
+}
+
+.periodVariation{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
+
+#bigTransactionsSpendingsHeight{
+    height: 25rem;
+}
+
+.bigTransactions{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    height: 50%;
+    width: 50%;
+}
+
+
+.income{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+}
