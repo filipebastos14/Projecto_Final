@@ -13,8 +13,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended : false }))
 app.use(express.static('public'));
 
-const DbConnect = require('./db/db');
-
 const con = mysql.createConnection({
     host: "localhost",
     user: "root",
@@ -34,19 +32,29 @@ con.connect((err) => {
 app.set('view engine', 'ejs');  
 app.set('views', path.join('views/'));
 
-app.get('/', (req,res) => {
+app.get('/login', (req,res) => {
     res.render('index')
 })
 
 // Teste render
-// app.get('/id/:id', (req, res) => {
-//     const {id} = req.params;
-//     const dataId = dataTeste[id];
-//     res.render('home', dataId);
-// })
+app.get('/', (req, res) => {
+    const dados = require('./models/user.json');
+    console.log(dados);
+    if (dados.email == null) {
+        console.log('nulo');
+        res.render('index')
+    } else {
+        console.log(logado);
+        res.render('home', dados);
+    } 
+})
 
 // Conexão DB
+const DbConnect = require('./db/db');
 const db = DbConnect.getDbConnectInstance();
+
+const userModel = require('./controllers/userController');
+const userModelFunctions = userModel.getUserInstance();
 
 app.post('/user/new', (req,res) => {
     let object = req.body;
@@ -82,6 +90,7 @@ app.get('/user/login/', (req,res) => {
                             'saldo': 0,
                             'movimentos': []
                         }
+
                         console.log(userDetalhes);
                         let query = "select c.categoria as cat, m.valor as val, m.data_movimento as data, m.descricao as descr, m.tipo_movimento as tipo from movimento m join categoria c on m.id_categoria = c.id where id_utilizador = ?"
                         con.query(query,userDetalhes.id, (err,result2) => {
@@ -104,6 +113,7 @@ app.get('/user/login/', (req,res) => {
                             }
                             console.log(result2);
                             console.log(userDetalhes);
+                            userModelFunctions.guardarUser(JSON.stringify(userDetalhes,null,2))
                             res.render('home', userDetalhes)
                         })
                     } else {
@@ -127,6 +137,12 @@ app.get('/user/mov',(req,res) => {
     const result = db.verMovimento(id)
 
     return result
+})
+
+app.get('/logout', (req,res) => {
+    userModelFunctions.logout()
+
+    res.render('index')
 })
 
 app.listen(port, () => {

@@ -1,53 +1,30 @@
 {
-    "1": {
-        "nome": "carlos",
-        "email": "carlos@gmail.com",
-        "password": "1234",
-        "contas": [
-            {"id": "1",
-            "nome": "principal",
-            "saldo": 136.0}
-        ],
-        "movimentos": [
-            {"id": "1",
-            "descricao": "teste 1",
-            "valor": 25},
-            {"id": "2",
-            "descricao": "teste 2",
-            "valor": 25},
-            {"id": "3",
-            "descricao": "teste 3",
-            "valor": 25},
-            {"id": "4",
-            "descricao": "teste 4",
-            "valor": 25}
-        ]
-    },
-    "2": {
-        "nome": "Zé",
-        "email": "zé@gmail.com",
-        "password": "1454",
-        "contas": [
-            {"id": "1",
-            "nome": "principal",
-            "saldo": 1450.0},
-            {"id": "2",
-            "nome": "Poupança",
-            "saldo": 7840.0}
-        ],
-        "movimentos": [
-            {"id": "5",
-            "descricao": "teste 1",
-            "valor": 256},
-            {"id": "6",
-            "descricao": "teste 2",
-            "valor": 72},
-            {"id": "7",
-            "descricao": "teste 3",
-            "valor": 4},
-            {"id": "8",
-            "descricao": "teste 8",
-            "valor": 45.4}
-        ]
-    }
+    "id": 14,
+    "email": "gustavo",
+    "nome": "gustavo",
+    "pass": "1234",
+    "saldo": 1234,
+    "movimentos": [
+      {
+        "categoria": "Lazer",
+        "valor": 120,
+        "data": "2023-11-16T00:00:00.000Z",
+        "descricao": "teste1",
+        "tipo": 1
+      },
+      {
+        "categoria": "Vestuário",
+        "valor": 46,
+        "data": "2023-11-09T00:00:00.000Z",
+        "descricao": "teste2",
+        "tipo": 1
+      },
+      {
+        "categoria": "Extra",
+        "valor": 1400,
+        "data": "2023-11-02T00:00:00.000Z",
+        "descricao": "teste3",
+        "tipo": 2
+      }
+    ]
 }
