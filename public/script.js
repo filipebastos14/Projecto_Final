@@ -1,4 +1,4 @@
-const registerBtn = document.querySelector('#register-submit')
+const registerBtn = document.querySelector('#register-submit');
 
 registerBtn.onclick = function () {
     const nomeInput = document.querySelector('#register-name');
@@ -101,24 +101,11 @@ newMovBtn.onclick = function () {
     .then(response => response.json())
 }
 
-const movBtn = document.querySelector('#movimento-check')
 
-movBtn.onclick = function () {
 
-    const idInput = document.querySelector('#id-utilizador');
-    const id = idInput.value;
-    idInput.value = "";
+const logoutBtn = document.querySelector('#logout')
 
-    const url = `http://localhost:3000/user/mov?id=${id}`;
-
-    data = fetch(url, {
-        headers: {
-            'content-type': 'application/json'
-        },
-        method: 'GET'
-    })
-    .then(response => response.json())
-
-    console.log(data);
+logoutBtn.onclick = function () {
+    fetch('http://localhost:3000/logout')
 }
 
