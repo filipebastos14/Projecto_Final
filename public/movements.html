@@ -13,14 +13,14 @@
 
 <body>
     <header>
-        <nav class="navbar bg-body-tertiary bg-primary">
+        <nav class="navbar">
             <div class="container-fluid">
                 <div class="row" style="width: 100%;">
                     <div class="col-2">
                         <div class="centerDivNav">
                             <a href="#">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
-                                    class="bi bi-list" viewBox="0 0 16 16">
+                                    class="bi bi-list menuIcon" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd"
                                         d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
                                 </svg>
@@ -29,14 +29,14 @@
                     </div>
                     <div class="col-8 text-center">
                         <div id="navTitle" class="centerDivNav">
-                            <p class="logoTitle"><b>MyFinance</b></p>
+                            <p class="logoTitle"><b>FGO</b></p>
                         </div>
                     </div>
                     <div class="col-2 text-end">
                         <div id="rightMenuDiv" class="centerDivNav">
                             <a href="#">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
-                                    class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                                    class="bi bi-three-dots-vertical menuIcon" viewBox="0 0 16 16">
                                     <path
                                         d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
                                 </svg>
@@ -55,11 +55,11 @@
                 <form method="POST" id="adicionar-movimentos-div">
                     <div class="form-group">
                         <label for="exampleFormControlInput1">How much:</label>
-                        <input name="valor" type="number" class="form-control" id="exampleFormControlInput1" placeholder="">
+                        <input name="valor" type="number" class="form-control" placeholder="">
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlSelect1">In or out: </label>
-                        <select name="tipo" class="form-control" id="exampleFormControlSelect1">
+                        <select name="tipo" class="form-control">
                             <option value="0">Income</option>
                             <option value="1">Expense</option>
                         </select>
@@ -71,11 +71,11 @@
                     </div>
                     <div class="form-group">
                         <label for="exampleFormControlTextarea1">Description:</label>
-                        <textarea name="descricao" class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                        <textarea name="descricao" class="form-control"  rows="3"></textarea>
                     </div>
                     <div class="form-group">
-                        <label for="exampleFormControlTextarea1">Date:</label>
-                        <input name="data" class="form-check-input" type="date" value="" id="datePicker">
+                        <label for="data">Date:</label>
+                        <input name="data" class="form-control" type="date" value="" style="width: 100%;" id="datePicker">
                     </div>
                     <div class="form-check">
                         <input name="fixo" class="form-check-input" type="checkbox" id="fixoInput">
@@ -84,13 +84,13 @@
                         </label>
                     </div>
                     <div>
-                        <button id="insertButton" type="button" class="btn btn-dark">Submit</button>
+                        <button id="insertButton" type="button" class="btn btn-dark" style="max-width: 13%;" ><b>Create</b></button>
                     </div>
                 </form>
             </div>
             <div class="lastTransactions">
                 <h4>Your transactions</h4>
-                <div id="movimentos-totais" class="list-group">
+                <div id="movimentos-totais card-list" class="list-group">
                 </div>
             </div>
             <div class="newCategory">
@@ -98,16 +98,16 @@
                 <div class="nova-categoria">
                     <label for="exampleFormControlInput1">Name:</label>
                     <input id="idNovaCategoria" name="categoria" type="text" class="form-control" placeholder="">
-                    <button id="insertButtonCategory" type="button" class="btn btn-dark">Submit</button>
+                    <button id="insertButtonCategory" type="button" class="btn btn-dark" style="max-width: 13%;"><b>Create</b></button>
                 </div>
             </div>
             <div class="upcomingTransactions">
                 <h4>Upcoming Transactions</h4>
-                <div id="proximas-despesas" class="list-group"></div>
+                <div id="proximas-despesas" class="list-group card-list"></div>
             </div>
             <div class="everyMonthTransactions">
                 <h4>Every month transactions </h4>
-                <div id="despesas-mensais-fixas" class="list-group"></div>
+                <div id="despesas-mensais-fixas" class="list-group card-list"></div>
             </div>
         </div>
     </main>

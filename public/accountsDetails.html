@@ -13,14 +13,14 @@
 
 <body>
     <header>
-        <nav class="navbar bg-body-tertiary bg-primary">
+        <nav class="navbar">
             <div class="container-fluid">
                 <div class="row" style="width: 100%;">
                     <div class="col-2">
                         <div class="centerDivNav">
                             <a href="#">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
-                                    class="bi bi-list" viewBox="0 0 16 16">
+                                    class="bi bi-list menuIcon" viewBox="0 0 16 16">
                                     <path fill-rule="evenodd"
                                         d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
                                 </svg>
@@ -29,14 +29,14 @@
                     </div>
                     <div class="col-8 text-center">
                         <div id="navTitle" class="centerDivNav">
-                            <p class="logoTitle"><b>MyFinance</b></p>
+                            <p class="logoTitle"><b>FGO</b></p>
                         </div>
                     </div>
                     <div class="col-2 text-end">
                         <div id="rightMenuDiv" class="centerDivNav">
                             <a href="#">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
-                                    class="bi bi-three-dots-vertical" viewBox="0 0 16 16">
+                                    class="bi bi-three-dots-vertical menuIcon" viewBox="0 0 16 16">
                                     <path
                                         d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
                                 </svg>
@@ -48,41 +48,26 @@
         </nav>
     </header>
 
-    <main class="container">
-
-        <div class="gridAccounts">
-            <div class="account1Details">
-                <h3>Detalhes das contas associadas</h3>
-                <p>Conta atual</p>
-                <p>Saldo</p>
-                <p>Nome</p>
-                <p>Número da conta</p>
-
-
-
+    <main class="container p-4">
+        <h3>Detalhes das contas associadas</h3>
+        <div class="card p-4 cardColor">
+            <div class="conta-atual">
+                <span>Conta atual: </span><span>Filipe</span>
             </div>
-            <div class="account2Details">
-                <p>Conta 2</p>
-                <p>Saldo</p>
-                <p>Nome</p>
-                <p>Número da conta</p>
+            <div class="conta-atual">
+                <span>Saldo: </span><span>548eur</span>
             </div>
-
+            <div class="conta-atual">
+                <span>Nome: </span><span>Filipe</span>
+            </div>
+            <div class="conta-atual">
+                <span>Número da conta: </span><span>4865132578</span>
+            </div>
 
         </div>
-
-
-
-
-
-
     </main>
-
-
     <footer>
-
     </footer>
-
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"

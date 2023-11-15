@@ -1,6 +1,35 @@
+
+body{
+    background-color: rgb(31, 78, 121);
+    color: beige;
+}
+
+nav{
+    background-color: rgb(24, 66, 105) !important;
+}
+input, select, textarea{
+    background-color: rgb(31, 78, 121) !important;
+    border: none !important;
+    color: beige !important;
+}
+
+button{
+    background-color: rgb(255, 192, 0) !important;
+    color: white !important;
+}
+.cardColor{
+    background-color: rgb(31, 78, 121);
+    color: white;
+    text-align: left;
+}
+
 .logoTitle{
     padding: 0;
     margin: 0;
+}
+
+.menuIcon{
+    filter: invert(74%) sepia(85%) saturate(1462%) hue-rotate(356deg) brightness(99%) contrast(107%);
 }
 
 .centerDivNav{
@@ -17,23 +46,10 @@
     justify-content: end;
 }
 
-.gridAccounts{
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto auto;
-    gap: 3rem;
-}
-
-.account1Details{
-    grid-column-start: 1;
-    grid-column-end: 3;
-    grid-row-start: 1;
-    grid-row-end: 2;
-}
-
-.account2Details{
-    grid-column-start: 1;
-    grid-column-end: 3;
-    grid-row-start: 2;
-    grid-row-end: 3;
+.cardColor{
+    background-color: rgba(175, 175, 175, 0.116);
+    color: white;
+    text-align: left;
+    gap: 1rem;
+    
 }

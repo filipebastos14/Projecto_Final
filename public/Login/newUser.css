@@ -1,8 +1,26 @@
 * {box-sizing: border-box}
 *{font-family: 'Roboto', sans-serif;}
 
+
+body{
+  background-color: rgb(31, 78, 121) !important;
+  color: beige !important;
+}
+
+input{
+  background-color: #305a80 !important;
+  border: none !important;
+  color: beige !important;
+}
+
+button{
+  background-color: rgb(255, 192, 0) !important;
+  color: white !important;
+}
+
 form{
-    max-width: 500px;
+  border: none !important;
+  max-width: 500px;
 }
 
 .container {

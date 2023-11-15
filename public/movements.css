@@ -1,3 +1,27 @@
+body{
+    background-color: rgb(31, 78, 121);
+    color: beige;
+}
+
+nav{
+    background-color: rgb(24, 66, 105) !important;
+}
+input, select, textarea{
+    background-color: rgb(31, 78, 121) !important;
+    border: none !important;
+    color: beige !important;
+}
+
+button{
+    background-color: rgb(255, 192, 0) !important;
+    color: white !important;
+}
+.cardColor{
+    background-color: rgb(31, 78, 121);
+    color: white;
+    text-align: left;
+}
+
 .logoTitle{
     padding: 0;
     margin: 0;
@@ -15,6 +39,12 @@
 
 #rightMenuDiv{
     justify-content: end;
+}
+
+#adicionar-movimentos-div{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 .transactionsGrid{
@@ -37,11 +67,40 @@
     grid-row-end: 2;
 }
 
+.card-list{
+    border: 1px solid rgba(0, 25, 80, 0.418);
+}
+
+.card-list > a{
+    background: rgb(31, 78, 121);
+    border-left: none;
+    border-bottom: 1px solid rgba(0, 25, 80, 0.418);
+    border-top: none;
+    border-right: none;
+    color: beige;
+
+}
+
+.card-list >a:hover{
+    background: rgb(24, 66, 105);
+    color: beige;
+}
+
+.nova-categoria{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
 .newCategory{
     grid-column-start: 1;
     grid-column-end: 2;
     grid-row-start: 2;
     grid-row-end: 3;
+}
+
+.menuIcon{
+    filter: invert(74%) sepia(85%) saturate(1462%) hue-rotate(356deg) brightness(99%) contrast(107%);
 }
 
 .upcomingTransactions{
