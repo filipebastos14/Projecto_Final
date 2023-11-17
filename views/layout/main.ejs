@@ -6,10 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    
-    <title>MyFinance - Search by category</title>
-    <link rel="stylesheet" href="categories.css">
-    <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    <title>MyFinance - Accounts</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 
@@ -50,64 +49,24 @@
         </nav>
     </header>
 
-    <main class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="row">
-                    <div class="CategoryAnualSpendings col-2">
-                        <i class="fa-solid fa-house"></i> <!-- NOT WORKING-->
-                        <p>Food</p>
-                    </div>
-                    <div class="CategoryAnualSpendings col-2">
-                        <p>Car</p>
-                    </div>
-                    <div class="CategoryAnualSpendings col-2">
-                        <p>Turism</p>
-                    </div>
-                    <div class="CategoryAnualSpendings col-2">
-                        <p>Clothing</p>
-                    </div>
-                    <div class="CategoryAnualSpendings col-2">
-                        <p>Going Out</p>
-                    </div>
-                    <div class="CategoryAnualSpendings col-2">
-                        <p>Vet</p>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <main class="container pt-5">
 
+        <%- body %>
 
-        <div class="row">
-            <div class="monthlySpendings col-6" id="monthlySpendingsHeight">
-                <canvas id="monthlySpendingsChart"></canvas>
-            </div>
-            <div class="periodVariation col-6">
-                <canvas id="periodVariationChart"></canvas>
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="bigTransactions col-6" id="bigTransactionsSpendingsHeight">
-                <canvas id="bigTransactionsChart"></canvas>
-            </div>
-            <div class="income col-6">
-                <canvas id="incomeChart"></canvas>
-            </div>
-        </div>
     </main>
 
 
     <footer>
 
     </footer>
+
+
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
         crossorigin="anonymous"></script>
 
-    <script src="accessCategories.js"></script>
 </body>
 
 </html>
