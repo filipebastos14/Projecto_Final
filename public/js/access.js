@@ -1,3 +1,5 @@
+console.log(user);
+
 axios({
     method: 'get',
     url: 'http://localhost:3000/saldoActual'

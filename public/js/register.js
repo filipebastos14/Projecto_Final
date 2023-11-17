@@ -1,7 +1,7 @@
 const formDataRegister = document.querySelector('#registerForm');
 const registerBtn = document.querySelector('#register-submit');
 
-registerBtn.addEventListener('click', (e) => {
+registerBtn.addEventListener('click', async (e) => {
     console.log(1);
     console.log("clicado!");
     e.preventDefault();
@@ -13,16 +13,25 @@ registerBtn.addEventListener('click', (e) => {
 
     console.log(2);
 
-    fetch('http://localhost:3000/user/new', {
-        headers: {
-            'content-type': 'application/json'
-        },
-        method: 'POST',
-        body: JSON.stringify({
-            'nome' : nome,
-            'email' : email,
-            'pass' : pass
+    try {
+        const response = await fetch('http://localhost:3000/user/new', {
+            headers: {
+                'content-type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                'nome' : nome,
+                'email' : email,
+                'pass' : pass
+            })
         })
-    })
-    .then(response => response)
+        if (response.redirected) {
+            window.location.href = response.url;
+        } else {
+            console.log('Registration successful but no redirect.');
+        }
+    } catch (error) {
+        console.error('Error:', error);
+    }
+
 });
