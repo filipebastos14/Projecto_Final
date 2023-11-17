@@ -105,14 +105,14 @@ app.get('/movimentos', (req,res) => {
     
 })
 
-app.get('/*', (req,res) => {
-    const userOutput = require(userPath);
-    if (userOutput["email"] == null) {
-        res.redirect('/login')
-    } else {
-        res.render('user_account/404')
-    } 
-})
+// app.get('/*', (req,res) => {
+//     const userOutput = require(userPath);
+//     if (userOutput["email"] == null) {
+//         res.redirect('/login')
+//     } else {
+//         res.render('user_account/404')
+//     } 
+// })
 
 
 app.post('/user/new', async (req,res) => {
