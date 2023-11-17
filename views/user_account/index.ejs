@@ -1,0 +1,142 @@
+        <div class="grid">
+            <div class="saldoConta">
+                <div class="brandName flex-row w-50 ">
+                    <div class="iconDiv text-center">
+                        <i style="font-size: 4rem" class="bi bi-coin"></i>
+                    </div>
+                    <div class="nomeDaApp">
+                        <h3>MyFinance</h3>
+                    </div>
+                </div>
+                <div class="column w-50">
+                    <div class="w-100">
+                        <h5>Saldo Atual</h5>
+                    </div>
+                    <div id="saldo-actual-div" style="font-size: 4rem;" class="w-100">
+                        <%= saldoAtual %> €
+                    </div>
+                </div>
+
+            </div>
+            <div class="estatisticasHomepage">
+                <div>
+                    <canvas id="historicoAnual"></canvas>
+                </div>
+            </div>
+            <div class="ultimosMovimentosHomepage">
+                <h4>Últimos Movimentos</h4>
+
+                <div class="list-group" id="ultimo-movimentos-div">
+
+                    <% let hoje = new Date() %>
+                    <% let ano = hoje.getFullYear(), mes = hoje.getMonth()+1, dia = hoje.getDate(); %>
+                    <% let hojeFormatado = ano + '-' + (mes < 10 ? '0' : '') + mes + '-' + (dia < 10 ? '0' : '') + dia; %>
+                    <% let count = 0 %>
+                    <% for (let movimento of movimentos) { %>
+                        <% if (movimento['data'] <= hojeFormatado) { %>
+                            <% count++ %>
+                            <a href="#" data-id="<%= count %>" onclick="toggleActive(this)" class="list-group-item list-group-item-action border border-light
+                                <% if (movimento.tipo == 2) { %>
+                                    bg-success text-dark bg-opacity-25
+                                <% } else if (movimento.tipo == 1) { %>
+                                    bg-danger text-dark bg-opacity-25
+                                <% } %>
+                                <%= movimento.valor %>
+                                 " aria-current="true">
+                                <div class="d-flex w-100 justify-content-between">
+                                    <h5 class="mb-1"><%= movimento.categoria %></h5>
+                                    <small><%= movimento.data %></small>
+                                </div>
+                                <div class="d-flex w-100 justify-content-between">
+                                    <p class="mb-1"><%= movimento.descricao %></p>
+                                    <h6 class="mb-1">
+                                        <% if (movimento.tipo == 1) { %>
+                                            <span>- </span>
+                                        <% } else if (movimento.tipo == 2) { %>
+                                            <span>+ </span>
+                                        <% } %>
+                                        <%= movimento.valor %> €
+                                        </h6>
+                                </div>
+                            </a>
+
+                        <% if (count == 6) { break; } %>
+                    <% }} %>
+                </div>
+
+            </div>
+            <div class="seccaoNoticias">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the card's content.</p>
+                        <a href="#" class="card-link">Card link</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the card's content.</p>
+                        <a href="#" class="card-link">Card link</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the card's content.</p>
+                        <a href="#" class="card-link">Card link</a>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
+                            the card's content.</p>
+                        <a href="#" class="card-link">Card link</a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+        <script>
+            const ctx = document.getElementById('myChart');
+    
+            new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Jan', 'Feb', 'Mar', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                    datasets: [{
+                        label: 'Ammount',
+                        data: [1200, 1900, 300, 500, 200, 300, 569, 2304, 234, 123, 6000],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+    
+    
+            function toggleActive(el){
+                document.querySelectorAll('.list-group > a').forEach((el)=>{
+                    el.classList.remove('active');
+                });
+    
+                el.classList.add('active');
+                
+            }
+        </script>
+        <script src="js/access.js"></script>

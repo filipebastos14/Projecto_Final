@@ -1,15 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Homepage</title>
-    <script>
-        user = require('../models/user.json')
-        console.log(user);
-    </script>
-</head>
-<body>
     <h1>Utilizador</h1>
     <br>
 
@@ -27,6 +15,3 @@
     <% for (let movimento of movimentos) { %>
         <h2>categoria: <%= movimento.categoria %><br>Descrição: <%= movimento.descricao %><br>valor: <%= movimento.valor %>€<br>Data: <%= movimento.data %></h2>
     <% } %>
-
-</body>
-</html>
