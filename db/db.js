@@ -6,8 +6,8 @@ let instance = null;
 const con = mysql.createConnection({
     host: "localhost",
     user: "root",
-    password: "root",
-    database: "pfteste",
+    password: "",
+    database: "meter nome da db aqui",
     port: "3306"
 })
 
@@ -38,24 +38,23 @@ class DbConnect {
 
     async verificarUtilizador(email) {
         try {
-            let result = await new Promise((resolve, reject) => {
-                let query = 'select email, pass from utilizador where email = ?'
-
-                con.query(query,email,(err,result) => {
-                    if (err) {
-                        reject(new Error(err.message))
-                    } else {
-                        if (result.length > 0) {
-                            console.log(result);
-                            resolve(result);
-                        }
-                        reject(new Error('utilizador não existe'))
-                    }
-                })
-            })
+          return new Promise((resolve, reject) => {
+            let query = 'SELECT id, nome, email, pass FROM utilizador WHERE email = ?';
+      
+            con.query(query, email, (err, result) => {
+              if (err) {
+                reject(new Error(err.message));
+              } else {
+                if (result.length > 0) {
+                  resolve(result);
+                } else {
+                  reject(new Error('Utilizador não existe'));
+                }
+              }
+            });
+          });
         } catch (error) {
-            console.log("catch 2: "+error);
-            return error
+          return error;
         }
     }
 
@@ -79,6 +78,29 @@ class DbConnect {
 
         } catch (error) {
             console.log(error);
+        }
+    }
+
+
+    async movimentosUtilizador(id) {
+        try {
+          let result = await new Promise((resolve, reject) => {
+            let query =
+              "SELECT c.categoria AS cat, m.valor AS val, m.data_movimento AS data, m.descricao AS descr, m.tipo_movimento AS tipo, m.id AS id FROM movimento m JOIN categoria c ON m.id_categoria = c.id WHERE id_utilizador = ?";
+            con.query(query, id, (err, result) => {
+              if (err) {
+                reject(new Error(err.message));
+              } else {
+                resolve(result);
+              }
+            });
+          });
+
+        return result;
+          
+        } catch (error) {
+          console.error(error);
+          throw error; // Re-throw the error to handle it in the calling code
         }
     }
 
@@ -109,12 +131,11 @@ class DbConnect {
             let result = await new Promise((resolve, reject) => {
             
                 let query = 'select * from movimento where id_utilizador = ?'
-                console.log(id);
                 con.query(query,parseInt(id),(err,result) => {
                     if (err) {
                         reject(new Error(err.message));
                     } else {
-                        console.log([result]);
+                        resolve(result);
                     }
                 })
             })

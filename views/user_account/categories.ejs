@@ -1,3 +1,17 @@
+<script>
+    // Script de criação de variável user com todos os movimentos a ser usada para as estatisticas
+    
+    user = {
+        'id': "<%= id %>",
+        'name': "<%= nome %>",
+        'email': "<%= email %>",
+        'name': "<%= nome %>",
+        'saldoAtual': <%= saldoAtual %>,
+        'saldoPrevisto': <%= saldoPrevisto %>,
+        'movimentos' : <%- JSON.stringify(movimentos) %>
+    }
+</script>
+        
         <div class="row">
             <div class="col-12">
                 <div class="row">
