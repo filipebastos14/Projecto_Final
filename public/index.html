@@ -1,188 +1,417 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css"
+    />
     <title>MyFinance - Homepage</title>
-    <link rel="stylesheet" href="style.css">
-</head>
+    <link rel="stylesheet" href="style.css" />
+  </head>
 
-
-<body style="overflow-x: hidden;">
-    <header>
-        <nav class="navbar">
-            <div class="container-fluid">
-                <div class="row" style="width: 100%;">
-                    <div class="col-2">
-                        <div class="centerDivNav">
-                            <a href="#">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
-                                    class="bi bi-list menuIcon" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd"
-                                        d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
-                                </svg>
-                            </a>
-                        </div>
+  <body style="overflow-x: hidden">
+    <div class="container-fluid">
+      <div class="row flex-nowrap">
+        <div
+          id="divSidebarMenu"
+          class="col-auto col-md-3 col-xl-2 px-sm-2 px-0"
+          style="display: none"
+        >
+          <div
+            class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100"
+          >
+            <a
+              href="/"
+              class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none"
+            >
+              <span class="fs-5 d-none d-sm-inline">Menu</span>
+            </a>
+            <ul
+              class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+              id="menu"
+            >
+              <li class="nav-item">
+                <a
+                  href="/"
+                  class="align-middle px-0"
+                  style="text-decoration: none"
+                >
+                  <i class="bi bi-house"></i>
+                  <span class="ms-1 d-none d-sm-inline">Home</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/movements.html"
+                  class="align-middle px-0"
+                  style="text-decoration: none"
+                >
+                  <i class="bi bi-wallet2"></i>
+                  <span class="ms-1 d-none d-sm-inline">Transactions</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/categories.html"
+                  class="align-middle px-0"
+                  style="text-decoration: none"
+                >
+                  <i class="bi bi-graph-up-arrow"></i>
+                  <span class="ms-1 d-none d-sm-inline">Statistics</span>
+                </a>
+              </li>
+            </ul>
+            <hr />
+          </div>
+        </div>
+        <div class="col py-3">
+          <header>
+            <nav class="navbar">
+              <div class="container-fluid">
+                <div class="row" style="width: 100%">
+                  <div class="col-2">
+                    <div class="centerDivNav">
+                      <a id="sidebarMenu">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="40"
+                          height="40"
+                          fill="currentColor"
+                          class="bi bi-list menuIcon"
+                          viewBox="0 0 16 16"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
+                          />
+                        </svg>
+                      </a>
                     </div>
-                    <div class="col-8 text-center">
-                        <div id="navTitle" class="centerDivNav">
-                            <p class="logoTitle"><b>FGO</b></p>
-                        </div>
+                  </div>
+                  <div class="col-8 text-center">
+                    <div id="navTitle" class="centerDivNav">
+                      <p class="logoTitle"><b>FGO</b></p>
                     </div>
-                    <div class="col-2 text-end">
-                        <div id="rightMenuDiv" class="centerDivNav">
-                            <a href="#">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
-                                    class="bi bi-three-dots-vertical menuIcon" viewBox="0 0 16 16">
-                                    <path
-                                        d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
-                                </svg>
-                            </a>
-                        </div>
+                  </div>
+                  <div class="col-2 text-end">
+                    <div id="rightMenuDiv" class="centerDivNav">
+                      <a id="sidebarMenuRight">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="25"
+                          height="25"
+                          fill="currentColor"
+                          class="bi bi-three-dots-vertical menuIcon"
+                          viewBox="0 0 16 16"
+                        >
+                          <path
+                            d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"
+                          />
+                        </svg>
+                      </a>
                     </div>
+                  </div>
                 </div>
-            </div>
-        </nav>
-    </header>
-
-    <main class="container pt-5">
-
-        <div class="grid">
-            <div class="saldoConta">
-                <div class="brandName flex-row w-50 ">
-                    <div class="iconDiv text-center">
-                        <!-- <i style="font-size: 4rem" class="bi bi-coin"></i> -->
-                        <img src="./images/logo.png" alt="Logo" height="128" width="128">
-                    </div>
-                    <div class="nomeDaApp">
-                        <h3>FGO</h3>
-                    </div>
+              </div>
+            </nav>
+          </header>
+          <main class="container pt-5">
+            <div class="grid">
+              <div class="saldoConta">
+                <div class="brandName flex-row w-50">
+                  <div class="iconDiv text-center">
+                    <!-- <i style="font-size: 4rem" class="bi bi-coin"></i> -->
+                    <img
+                      src="./images/logo.png"
+                      alt="Logo"
+                      height="128"
+                      width="128"
+                    />
+                  </div>
+                  <div class="nomeDaApp">
+                    <h3>FGO</h3>
+                  </div>
                 </div>
                 <div class="column w-50">
-                    <div class="w-100">
-                        <h5>Saldo Atual</h5>
-                    </div>
-                    <div id="saldo-actual-div" style="font-size: 4rem;" class="w-100">
-                    </div>
+                  <div class="w-100">
+                    <h5>Saldo Atual</h5>
+                  </div>
+                  <div
+                    id="saldo-actual-div"
+                    style="font-size: 4rem"
+                    class="w-100"
+                  ></div>
                 </div>
-
-            </div>
-            <div class="estatisticasHomepage">
+              </div>
+              <div class="estatisticasHomepage">
                 <div>
-                    <canvas id="historicoAnual"></canvas>
+                  <canvas id="historicoAnual"></canvas>
                 </div>
-            </div>
-            <div class="ultimosMovimentosHomepage">
+              </div>
+              <div class="ultimosMovimentosHomepage">
                 <h4>Últimos Movimentos</h4>
 
-                <div class="list-group" id="ultimo-movimentos-div">
-                </div>
-
-            </div>
-            <div class="seccaoNoticias" style="display: flex; flex-direction: column;">
+                <div class="list-group" id="ultimo-movimentos-div"></div>
+              </div>
+              <div
+                class="seccaoNoticias"
+                style="display: flex; flex-direction: column"
+              >
                 <div>
-                    <h3>Helpful Links</h3>
+                  <h3>Helpful Links</h3>
                 </div>
-                <div style="display: flex; gap: 1rem;">
-                    <div class="card cardColor">
-                        <div class="card-body">
-                            <h5 class="card-title"><b>Business Week</b></h5>
-                            <h6 class="card-subtitle mb-2 " style="color: grey;">by Bloomberg</h6>
-                            <p class="card-text">Bloomberg Businessweek is a globally recognized
-                                magazine that provides information and interpretation of what is happening in the world
-                                of business.</p>
-                            <a href="https://www.bloomberg.com/businessweek" class="card-link" style="color: cadetblue;" target="_blank">Business
-                                Week</a>
-                        </div>
+                <div style="display: flex; gap: 1rem">
+                  <div class="card cardColor">
+                    <div class="card-body">
+                      <h5 class="card-title"><b>Business Week</b></h5>
+                      <h6 class="card-subtitle mb-2" style="color: grey">
+                        by Bloomberg
+                      </h6>
+                      <p class="card-text">
+                        Bloomberg Businessweek is a globally recognized magazine
+                        that provides information and interpretation of what is
+                        happening in the world of business.
+                      </p>
+                      <a
+                        href="https://www.bloomberg.com/businessweek"
+                        class="card-link"
+                        style="color: cadetblue"
+                        target="_blank"
+                        >Business Week</a
+                      >
                     </div>
-                    <div class="card cardColor">
-                        <div class="card-body">
-                            <h5 class="card-title"><b>Reuters</b></h5>
-                            <h6 class="card-subtitle mb-2" style="color: grey;">by Thomson Reuters</h6>
-                            <p class="card-text">Reuters is the world's largest international multimedia news agency,
-                                providing its
-                                audience with the top world investing, business, stock market, technology, small
-                                business and personal finance news.</p>
-                            <a href="https://www.reuters.com/" class="card-link" style="color: cadetblue;" target="_blank">Reuters</a>
-                        </div>
+                  </div>
+                  <div class="card cardColor">
+                    <div class="card-body">
+                      <h5 class="card-title"><b>Reuters</b></h5>
+                      <h6 class="card-subtitle mb-2" style="color: grey">
+                        by Thomson Reuters
+                      </h6>
+                      <p class="card-text">
+                        Reuters is the world's largest international multimedia
+                        news agency, providing its audience with the top world
+                        investing, business, stock market, technology, small
+                        business and personal finance news.
+                      </p>
+                      <a
+                        href="https://www.reuters.com/"
+                        class="card-link"
+                        style="color: cadetblue"
+                        target="_blank"
+                        >Reuters</a
+                      >
                     </div>
-                    <div class="card cardColor">
-                        <div class="card-body">
-                            <h5 class="card-title"><b>Forbes</b></h5>
-                            <h6 class="card-subtitle mb-2" style="color: grey;">by Forbes</h6>
-                            <p class="card-text">Forbes is the home page of the world's business leaders, featuring
-                                original articles
-                                on finance, personal finance, investing, stock market, leadership, and marketing topics.
-                            </p>
-                            <a href="https://www.forbes.com/" class="card-link" style="color: cadetblue;" target="_blank">Forbes</a>
-                        </div>
+                  </div>
+                  <div class="card cardColor">
+                    <div class="card-body">
+                      <h5 class="card-title"><b>Forbes</b></h5>
+                      <h6 class="card-subtitle mb-2" style="color: grey">
+                        by Forbes
+                      </h6>
+                      <p class="card-text">
+                        Forbes is the home page of the world's business leaders,
+                        featuring original articles on finance, personal
+                        finance, investing, stock market, leadership, and
+                        marketing topics.
+                      </p>
+                      <a
+                        href="https://www.forbes.com/"
+                        class="card-link"
+                        style="color: cadetblue"
+                        target="_blank"
+                        >Forbes</a
+                      >
                     </div>
-                    <div class="card cardColor">
-                        <div class="card-body">
-                            <h5 class="card-title"><b>The Wall Street Journal</b></h5>
-                            <h6 class="card-subtitle mb-2" style="color: grey;">by TWSJ</h6>
-                            <p class="card-text">Wall Street Journal is one of the world's most famous magazines,
-                                providing its wide audience with the latest business, financial and stock news.</p>
-                            <a href="https://www.wsj.com/" class="card-link" style="color: cadetblue;" target="_blank">The Wall Street Journal</a>
-                        </div>
+                  </div>
+                  <div class="card cardColor">
+                    <div class="card-body">
+                      <h5 class="card-title"><b>The Wall Street Journal</b></h5>
+                      <h6 class="card-subtitle mb-2" style="color: grey">
+                        by TWSJ
+                      </h6>
+                      <p class="card-text">
+                        Wall Street Journal is one of the world's most famous
+                        magazines, providing its wide audience with the latest
+                        business, financial and stock news.
+                      </p>
+                      <a
+                        href="https://www.wsj.com/"
+                        class="card-link"
+                        style="color: cadetblue"
+                        target="_blank"
+                        >The Wall Street Journal</a
+                      >
                     </div>
+                  </div>
                 </div>
+              </div>
             </div>
+          </main>
 
+          <footer>
+            <div class="container">
+              <div class="row">
+                <div class="col-md-6 p-4 footer-column"  style="justify-content: space-around; display: flex;">
+                  <ul class="nav flex-column">
+                    <li class="nav-item">
+                      <span class="footer-title">Pages</span>
+                    </li>
+                    <li class="nav-item">
+                      <a  href="/movements.html">Transactions</a>
+                    </li>
+                    <li class="nav-item">
+                      <a  href="/categories.html">Statistics</a>
+                    </li>
+                    <li class="nav-item">
+                      <a  href="/accountsDetails.html">Account Details</a>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-md-6 p-4 footer-column" style="justify-content: space-around; display: flex;">
+                  <ul class="nav flex-column">
+                    <li class="nav-item">
+                      <span class="footer-title">Contact and Support</span>
+                    </li>
+                    <li class="nav-item">
+                      <span><i class="fas fa-phone"></i>+47 45 80 80 80</span>
+                    </li>
+                    <li class="nav-item">
+                      <a href="#"><i class="fas fa-comments"></i>Live chat</a>
+                    </li>
+                    <li class="nav-item">
+                      <a  href="#"><i class="fas fa-envelope"></i>Contact us</a>
+                    </li>
+                    <li class="nav-item">
+                      <a  href="#"><i class="fas fa-star"></i>Give feedback</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+          
+              <div class="text-center"><i class="fas fa-ellipsis-h"></i></div>
+              
+              <div class="row text-center">
+                <div class="col-md-12 box">
+                  <ul class="list-inline quick-links">
+                    <li class="list-inline-item">
+                      <a href="#">Privacy Policy</a>
+                    </li>
+                    <li class="list-inline-item">
+                      <a href="#">Terms of Use</a>
+                    </li>
+                  </ul>
+                  <span class="copyright quick-links">Copyright &copy; FGO <script>document.write(new Date().getFullYear())</script>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </footer>
         </div>
+        <div
+          id="divSidebarMenuRight"
+          class="col-auto col-md-3 col-xl-2 px-sm-2 px-0"
+          style="display: none"
+        >
+          <div
+            class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 min-vh-100"
+          >
+            <a
+              href="/"
+              class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none"
+            >
+              <span class="fs-5 d-none d-sm-inline">Menu</span>
+            </a>
+            <ul
+              class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+              id="menu"
+            >
+              <li class="nav-item">
+                <a
+                  href="/accountsDetails.html"
+                  class="align-middle px-0"
+                  style="text-decoration: none"
+                >
+                  <i class="bi bi-person-circle"></i>
+                  <span class="ms-1 d-none d-sm-inline">Account Details</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/Login/login.html"
+                  class="align-middle px-0"
+                  style="text-decoration: none"
+                >
+                  <i class="bi bi-box-arrow-right"></i>
+                  <span class="ms-1 d-none d-sm-inline">Log Out</span>
+                </a>
+              </li>
+            </ul>
+            <hr />
+          </div>
+        </div>
+      </div>
+    </div>
 
-
-
-
-
-    </main>
-
-
-    <footer>
-
-    </footer>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
     <script>
-        const ctx = document.getElementById('myChart');
+      const ctx = document.getElementById("myChart");
 
-        new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                datasets: [{
-                    label: 'Ammount',
-                    data: [1200, 1900, 300, 500, 200, 300, 569, 2304, 234, 123, 6000],
-                    borderWidth: 1
-                }]
+      new Chart(ctx, {
+        type: "bar",
+        data: {
+          labels: [
+            "Jan",
+            "Feb",
+            "Mar",
+            "May",
+            "Jun",
+            "Jul",
+            "Aug",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+          ],
+          datasets: [
+            {
+              label: "Ammount",
+              data: [1200, 1900, 300, 500, 200, 300, 569, 2304, 234, 123, 6000],
+              borderWidth: 1,
             },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                }
-            }
+          ],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true,
+            },
+          },
+        },
+      });
+
+      function toggleActive(el) {
+        document.querySelectorAll(".list-group > a").forEach((el) => {
+          el.classList.remove("active");
         });
 
-
-        function toggleActive(el) {
-            document.querySelectorAll('.list-group > a').forEach((el) => {
-                el.classList.remove('active');
-            });
-
-            el.classList.add('active');
-
-        }
+        el.classList.add("active");
+      }
     </script>
     <script src="access.js"></script>
-</body>
-
+    <script src="navbar.js"></script>
+  </body>
 </html>

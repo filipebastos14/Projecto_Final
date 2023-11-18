@@ -46,6 +46,29 @@ button{
     justify-content: end;
 }
 
+#divSidebarMenu{
+    background-color: rgb(24, 66, 105) !important;
+    color: beige !important;
+}
+
+a{
+    color: cadetblue !important;
+}
+
+#divSidebarMenuRight{
+    background-color: rgb(24, 66, 105) !important;
+    color: beige !important;
+}
+
+.nav-item{
+    padding: 0 !important;
+    margin-top: 0.5rem !important;
+}
+
+.nav-item > a{
+    text-decoration: none !important;
+}
+
 .row{
     max-height: 100;
 }

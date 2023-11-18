@@ -1,122 +1,302 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN"
+      crossorigin="anonymous"
+    />
 
     <title>MyFinance - Search by category</title>
-    <link rel="stylesheet" href="categories.css">
-    <script src="https://kit.fontawesome.com/yourcode.js" crossorigin="anonymous"></script>
-</head>
+    <link rel="stylesheet" href="categories.css" />
+    <script
+      src="https://kit.fontawesome.com/yourcode.js"
+      crossorigin="anonymous"
+    ></script>
+  </head>
 
-
-<body>
-    <header>
-        <nav class="navbar">
-            <div class="container-fluid">
-                <div class="row" style="width: 100%;">
-                    <div class="col-2">
-                        <div class="centerDivNav">
-                            <a href="#">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" fill="currentColor"
-                                    class="bi bi-list menuIcon" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd"
-                                        d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z" />
-                                </svg>
-                            </a>
-                        </div>
+  <body>
+    <div class="container-fluid">
+      <div class="row flex-nowrap">
+        <div
+          id="divSidebarMenu"
+          class="col-auto col-md-3 col-xl-2 px-sm-2 px-0"
+          style="display: none"
+        >
+          <div
+            class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 text-white min-vh-100"
+          >
+            <a
+              href="/"
+              class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none"
+            >
+              <span class="fs-5 d-none d-sm-inline">Menu</span>
+            </a>
+            <ul
+              class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+              id="menu"
+            >
+              <li class="nav-item">
+                <a
+                  href="/"
+                  class="align-middle px-0"
+                  style="text-decoration: none"
+                >
+                  <i class="bi bi-house"></i>
+                  <span class="ms-1 d-none d-sm-inline">Home</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/movements.html"
+                  class="align-middle px-0"
+                  style="text-decoration: none"
+                >
+                  <i class="bi bi-wallet2"></i>
+                  <span class="ms-1 d-none d-sm-inline">Transactions</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/categories.html"
+                  class="align-middle px-0"
+                  style="text-decoration: none"
+                >
+                  <i class="bi bi-graph-up-arrow"></i>
+                  <span class="ms-1 d-none d-sm-inline">Statistics</span>
+                </a>
+              </li>
+            </ul>
+            <hr />
+          </div>
+        </div>
+        <div class="col py-3">
+          <header>
+            <nav class="navbar">
+              <div class="container-fluid">
+                <div class="row" style="width: 100%">
+                  <div class="col-2">
+                    <div class="centerDivNav">
+                      <a id="sidebarMenu">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="40"
+                          height="40"
+                          fill="currentColor"
+                          class="bi bi-list menuIcon"
+                          viewBox="0 0 16 16"
+                        >
+                          <path
+                            fill-rule="evenodd"
+                            d="M2.5 12a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5zm0-4a.5.5 0 0 1 .5-.5h10a.5.5 0 0 1 0 1H3a.5.5 0 0 1-.5-.5z"
+                          />
+                        </svg>
+                      </a>
                     </div>
-                    <div class="col-8 text-center">
-                        <div id="navTitle" class="centerDivNav">
-                            <p class="logoTitle"><b>FGO</b></p>
-                        </div>
+                  </div>
+                  <div class="col-8 text-center">
+                    <div id="navTitle" class="centerDivNav">
+                      <p class="logoTitle"><b>FGO</b></p>
                     </div>
-                    <div class="col-2 text-end">
-                        <div id="rightMenuDiv" class="centerDivNav">
-                            <a href="#">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
-                                    class="bi bi-three-dots-vertical menuIcon" viewBox="0 0 16 16">
-                                    <path
-                                        d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
-                                </svg>
-                            </a>
-                        </div>
+                  </div>
+                  <div class="col-2 text-end">
+                    <div id="rightMenuDiv" class="centerDivNav">
+                      <a id="sidebarMenuRight">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="25"
+                          height="25"
+                          fill="currentColor"
+                          class="bi bi-three-dots-vertical menuIcon"
+                          viewBox="0 0 16 16"
+                        >
+                          <path
+                            d="M9.5 13a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0zm0-5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z"
+                          />
+                        </svg>
+                      </a>
                     </div>
+                  </div>
                 </div>
-            </div>
-        </nav>
-    </header>
+              </div>
+            </nav>
+          </header>
 
-    <main class="container p-4">
-        <div class="row">
-            <div class="col-12">
+          <main class="container p-4">
+            <div class="row">
+              <div class="col-12">
                 <div class="row">
-                    <div class="col-12 pb-3 d-flex justify-content-center align-items-center">
-                        <h1>Statistics</h1>
-                    </div>
+                  <div
+                    class="col-12 pb-3 d-flex justify-content-center align-items-center"
+                  >
+                    <h1>Statistics</h1>
+                  </div>
                 </div>
                 <div class="row g-5">
-                    <div class="CategoryAnualSpendings card col-2">
-                        <span>Food</span>
-                        <p>35%</p>
-                    </div>
-                    <div class="CategoryAnualSpendings card col-2">
-                        <span>Car</span>
-                    </div>
-                    <div class="CategoryAnualSpendings card col-2">
-                        <span>Turism</span>
-                    </div>
-                    <div class="CategoryAnualSpendings card col-2">
-                        <span>Clothing</span>
-                    </div>
-                    <div class="CategoryAnualSpendings card col-2">
-                        <span>Going Out</span>
-                    </div>
-                    <div class="CategoryAnualSpendings  card col-2">
-                        <span>Vet</span>
-                    </div>
+                  <div class="CategoryAnualSpendings card col-2">
+                    <span>Food</span>
+                    <p>35%</p>
+                  </div>
+                  <div class="CategoryAnualSpendings card col-2">
+                    <span>Car</span>
+                  </div>
+                  <div class="CategoryAnualSpendings card col-2">
+                    <span>Turism</span>
+                  </div>
+                  <div class="CategoryAnualSpendings card col-2">
+                    <span>Clothing</span>
+                  </div>
+                  <div class="CategoryAnualSpendings card col-2">
+                    <span>Going Out</span>
+                  </div>
+                  <div class="CategoryAnualSpendings card col-2">
+                    <span>Vet</span>
+                  </div>
                 </div>
+              </div>
             </div>
-        </div>
 
-
-        <div class="row">
-            <div class="card">
+            <div class="row">
+              <div class="card">
                 <div class="monthlySpendings col-6" id="monthlySpendingsHeight">
-                    <canvas id="monthlySpendingsChart"></canvas>
+                  <canvas id="monthlySpendingsChart"></canvas>
                 </div>
                 <div class="periodVariation col-6">
-                    <canvas id="periodVariationChart"></canvas>
+                  <canvas id="periodVariationChart"></canvas>
                 </div>
+              </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="card">
-                <div class="bigTransactions col-6" id="bigTransactionsSpendingsHeight">
-                    <canvas id="bigTransactionsChart"></canvas>
+            <div class="row">
+              <div class="card">
+                <div
+                  class="bigTransactions col-6"
+                  id="bigTransactionsSpendingsHeight"
+                >
+                  <canvas id="bigTransactionsChart"></canvas>
                 </div>
                 <div class="income col-6">
-                    <canvas id="incomeChart"></canvas>
+                  <canvas id="incomeChart"></canvas>
                 </div>
+              </div>
             </div>
+          </main>
         </div>
-    </main>
-
+        <div
+          id="divSidebarMenuRight"
+          class="col-auto col-md-3 col-xl-2 px-sm-2 px-0"
+          style="display: none"
+        >
+          <div
+            class="d-flex flex-column align-items-center align-items-sm-start px-3 pt-2 min-vh-100"
+          >
+            <a
+              href="/"
+              class="d-flex align-items-center pb-3 mb-md-0 me-md-auto text-white text-decoration-none"
+            >
+              <span class="fs-5 d-none d-sm-inline">Menu</span>
+            </a>
+            <ul
+              class="nav nav-pills flex-column mb-sm-auto mb-0 align-items-center align-items-sm-start"
+              id="menu"
+            >
+              <li class="nav-item">
+                <a
+                  href="/accountsDetails.html"
+                  class="align-middle px-0"
+                  style="text-decoration: none"
+                >
+                  <i class="bi bi-person-circle"></i>
+                  <span class="ms-1 d-none d-sm-inline">Account Details</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  href="/Login/login.html"
+                  class="align-middle px-0"
+                  style="text-decoration: none"
+                >
+                  <i class="bi bi-box-arrow-right"></i>
+                  <span class="ms-1 d-none d-sm-inline">Log Out</span>
+                </a>
+              </li>
+            </ul>
+            <hr />
+          </div>
+        </div>
+      </div>
+    </div>
 
     <footer>
-
+      <div class="container">
+        <div class="row">
+          <div class="col-md-6 p-4 footer-column"  style="justify-content: space-around; display: flex;">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <span class="footer-title">Pages</span>
+              </li>
+              <li class="nav-item">
+                <a  href="/movements.html">Transactions</a>
+              </li>
+              <li class="nav-item">
+                <a  href="/categories.html">Statistics</a>
+              </li>
+              <li class="nav-item">
+                <a  href="/accountsDetails.html">Account Details</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-6 p-4 footer-column" style="justify-content: space-around; display: flex;">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <span class="footer-title">Contact and Support</span>
+              </li>
+              <li class="nav-item">
+                <span><i class="fas fa-phone"></i>+47 45 80 80 80</span>
+              </li>
+              <li class="nav-item">
+                <a href="#"><i class="fas fa-comments"></i>Live chat</a>
+              </li>
+              <li class="nav-item">
+                <a  href="#"><i class="fas fa-envelope"></i>Contact us</a>
+              </li>
+              <li class="nav-item">
+                <a  href="#"><i class="fas fa-star"></i>Give feedback</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+    
+        <div class="text-center"><i class="fas fa-ellipsis-h"></i></div>
+        
+        <div class="row text-center">
+          <div class="col-md-12 box">
+            <ul class="list-inline quick-links">
+              <li class="list-inline-item">
+                <a href="#">Privacy Policy</a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#">Terms of Use</a>
+              </li>
+            </ul>
+            <span class="copyright quick-links">Copyright &copy; FGO <script>document.write(new Date().getFullYear())</script>
+            </span>
+          </div>
+        </div>
+      </div>
     </footer>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
-        crossorigin="anonymous"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
+      crossorigin="anonymous"
+    ></script>
 
     <script src="accessCategories.js"></script>
-</body>
-
+    <script src="navbar.js"></script>
+  </body>
 </html>

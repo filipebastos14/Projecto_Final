@@ -32,6 +32,29 @@ nav{
     justify-content: end;
 }
 
+#divSidebarMenu{
+    background-color: rgb(24, 66, 105) !important;
+    color: beige !important;
+}
+
+a{
+    color: cadetblue !important;
+}
+
+.nav-item{
+    padding: 0 !important;
+    margin-top: 0.5rem !important;
+}
+
+.nav-item > a{
+    text-decoration: none !important;
+}
+
+#divSidebarMenuRight{
+    background-color: rgb(24, 66, 105) !important;
+    color: beige !important;
+}
+
 .menuIcon{
     filter: invert(74%) sepia(85%) saturate(1462%) hue-rotate(356deg) brightness(99%) contrast(107%);
 }
