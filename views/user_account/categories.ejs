@@ -1,60 +1,61 @@
 <script>
-    // Script de criação de variável user com todos os movimentos a ser usada para as estatisticas
-    
-    user = {
-        'id': "<%= id %>",
-        'name': "<%= nome %>",
-        'email': "<%= email %>",
-        'name': "<%= nome %>",
-        'saldoAtual': <%= saldoAtual %>,
-        'saldoPrevisto': <%= saldoPrevisto %>,
-        'movimentos' : <%- JSON.stringify(movimentos) %>
-    }
+  // Script de criação de variável user com todos os movimentos a ser usada para as estatisticas
+
+  user = {
+    id: "<%= id %>",
+    name: "<%= nome %>",
+    email: "<%= email %>",
+  };
 </script>
-        
-        <div class="row">
-            <div class="col-12">
-                <div class="row">
-                    <div class="CategoryAnualSpendings col-2">
-                        <i class="fa-solid fa-house"></i> <!-- NOT WORKING-->
-                        <p>Food</p>
-                    </div>
-                    <div class="CategoryAnualSpendings col-2">
-                        <p>Car</p>
-                    </div>
-                    <div class="CategoryAnualSpendings col-2">
-                        <p>Turism</p>
-                    </div>
-                    <div class="CategoryAnualSpendings col-2">
-                        <p>Clothing</p>
-                    </div>
-                    <div class="CategoryAnualSpendings col-2">
-                        <p>Going Out</p>
-                    </div>
-                    <div class="CategoryAnualSpendings col-2">
-                        <p>Vet</p>
-                    </div>
-                </div>
-            </div>
-        </div>
 
-
-        <div class="row">
-            <div class="monthlySpendings col-6" id="monthlySpendingsHeight">
-                <canvas id="monthlySpendingsChart"></canvas>
-            </div>
-            <div class="periodVariation col-6">
-                <canvas id="periodVariationChart"></canvas>
-            </div>
+<main class="container p-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="row">
+        <div
+          class="col-12 pb-3 d-flex justify-content-center align-items-center">
+          <h1>Statistics</h1>
         </div>
-
-        <div class="row">
-            <div class="bigTransactions col-6" id="bigTransactionsSpendingsHeight">
-                <canvas id="bigTransactionsChart"></canvas>
-            </div>
-            <div class="income col-6">
-                <canvas id="incomeChart"></canvas>
-            </div>
+      </div>
+      <div id="categoryPercentage" class="row g-5">
+        <div class="CategoryAnualSpendings card col-2">
+          <span>Food</span>
+          <p>35%</p>
         </div>
-    
-        <script src="js/accessCategories.js"></script>
+        <div class="CategoryAnualSpendings card col-2">
+          <span>Car</span>
+        </div>
+        <div class="CategoryAnualSpendings card col-2">
+          <span>Turism</span>
+        </div>
+        <div class="CategoryAnualSpendings card col-2">
+          <span>Clothing</span>
+        </div>
+        <div class="CategoryAnualSpendings card col-2">
+          <span>Going Out</span>
+        </div>
+        <div class="CategoryAnualSpendings card col-2">
+          <span>Vet</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row graphsBG m-2">
+    <div class="monthlySpendings col-6 cardStatistics" id="monthlySpendingsHeight">
+      <canvas id="monthlySpendingsChart"></canvas>
+    </div>
+    <div class="bigTransactions col-6 cardStatistics" id="bigTransactionsSpendingsHeight">
+      <canvas id="bigTransactionsChart"></canvas>
+    </div>
+  </div>
+
+  <div class="row graphsBG m-2">
+    <div class="periodVariation col-6 cardStatistics">
+      <canvas id="periodVariationChart"></canvas>
+    </div>
+    <div class="income col-6 cardStatistics">
+      <canvas id="incomeChart"></canvas>
+    </div>
+  </div>
+</main>

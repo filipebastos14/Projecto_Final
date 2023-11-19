@@ -1,20 +1,18 @@
-console.log(user);
-
 axios({
     method: 'get',
-    url: 'http://localhost:3000/saldoActual'
+    url: `http://localhost:3000/saldoActual?userId=${user.id}`,
 })
     .then(function (response) {
         let saldoActualDiv = document.querySelector('#saldo-actual-div');
         let total = response.data[0].total;
 
-        saldoActualDiv.innerHTML = `<p>${total} euros</p>`;
+        saldoActualDiv.innerHTML = `<p>${total}€</p>`;
     });
 
 
 axios({
     method: 'get',
-    url: 'http://localhost:3000/ultimosMovimentos'
+    url: `http://localhost:3000/ultimosMovimentos?userId=${user.id}`
 })
     .then(function (response) {
         let ultimosMovimentosDiv = document.querySelector('#ultimo-movimentos-div');
@@ -28,7 +26,7 @@ axios({
                     <h5 class="mb-1">${movimento.descricao}</h5>
                     <small>${formatData.toLocaleDateString("en-US")}</small>
                 </div>
-                <p class="mb-1">${movimento.valor}eur</p>
+                <p class="mb-1 ${movimento.tipo==0? "text-success" : "text-danger"}">${movimento.valor}€</p>
             </a>
             `;
         });
@@ -36,7 +34,7 @@ axios({
 
 axios({
     method: 'get',
-    url: 'http://localhost:3000/movimentosAnual'
+    url: `http://localhost:3000/movimentosAnual?userId=${user.id}`
 })
     .then(function (response) {
         const ctx = document.getElementById('historicoAnual');
@@ -49,9 +47,9 @@ axios({
         new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['Jan', 'Feb', 'Mar', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
+                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
                 datasets: [{
-                    label: 'Ammount',
+                    label: 'Expenses',
                     data: data,
                     borderWidth: 1
                 }]
@@ -59,7 +57,21 @@ axios({
             options: {
                 scales: {
                     y: {
-                        beginAtZero: true
+                        beginAtZero: true,
+                        ticks: {
+                            color: "beige"
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: "beige"
+                        }
+                    }
+                }, plugins: {
+                    legend: {
+                        labels: {
+                            color: "beige"
+                        }
                     }
                 }
             }

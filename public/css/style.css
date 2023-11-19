@@ -1,3 +1,23 @@
+:root{
+    --bg-color: rgba(175, 175, 175, 0.116);
+}
+
+
+body{
+    background-color: rgb(31, 78, 121);
+    color: beige;
+}
+
+nav{
+    background-color: rgb(24, 66, 105) !important;
+}
+
+.cardColor{
+    background-color: rgb(31, 78, 121);
+    color: white;
+    text-align: left;
+}
+
 .logoTitle{
     padding: 0;
     margin: 0;
@@ -15,6 +35,33 @@
 
 #rightMenuDiv{
     justify-content: end;
+}
+
+#divSidebarMenu{
+    background-color: rgb(24, 66, 105) !important;
+    color: beige !important;
+}
+
+a{
+    color: cadetblue !important;
+}
+
+.nav-item{
+    padding: 0 !important;
+    margin-top: 0.5rem !important;
+}
+
+.nav-item > a{
+    text-decoration: none !important;
+}
+
+#divSidebarMenuRight{
+    background-color: rgb(24, 66, 105) !important;
+    color: beige !important;
+}
+
+.menuIcon{
+    filter: invert(65%) sepia(85%) saturate(546%) hue-rotate(359deg) brightness(102%) contrast(104%);
 }
 
 .grid{
@@ -62,7 +109,6 @@
 .ultimosMovimentosHomepage > div {
     overflow-y: scroll; 
     max-height: 100%;
-    
 }
 
 .seccaoNoticias{
@@ -87,94 +133,26 @@
     align-items: center;
 }
 
- /* Fim do Style normal */
-
-  /* Inicio do Style account details */
-
-  .gridAccounts{
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto auto;
-    gap: 3rem;
+.list-group > a{
+    background: rgba(175, 175, 175, 0.116);
+    color: beige !important;
+    border-top: none;
+    border-right: none;
+    border-left: none;
 }
 
-.account1Details{
-    grid-column-start: 1;
-    grid-column-end: 3;
-    grid-row-start: 1;
-    grid-row-end: 2;
+.list-group > a:hover{
+    background-color: rgb(24, 66, 105) !important;
 }
 
-.account2Details{
-    grid-column-start: 1;
-    grid-column-end: 3;
-    grid-row-start: 2;
-    grid-row-end: 3;
+/*  Transactions */
+input, select, textarea{
+    background-color: rgb(31, 78, 121) !important;
+    border: 1px solid #f5f5dc1f !important;
+    color: beige !important;
 }
 
- /* Fim do Style account details */
-
-  /* Inicio do Style categories */
-
-  .row{
-    max-height: 100;
-}
-
-
-.CategoryAnualSpendings{
-    /*
-    ??
-    */
-}
-
-
-#monthlySpendingsHeight{
-    height: 25rem;
-}
-
-.monthlySpendings{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-    height: 50%;
-    width: 50%;
-}
-
-.periodVariation{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-}
-
-#bigTransactionsSpendingsHeight{
-    height: 25rem;
-}
-
-.bigTransactions{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-    height: 50%;
-    width: 50%;
-}
-
-
-.income{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 2rem;
-}
-
-
- /* Fim do Style categories */
-
-  /* Inicio do Style movements */
-
-  .transactionsGrid{
+.transactionsGrid{
     display: grid;
     grid-template-columns: auto auto;
     grid-template-rows: auto auto auto;
@@ -192,6 +170,13 @@
     grid-column-end: 2;
     grid-row-start: 1;
     grid-row-end: 2;
+}
+
+
+.nova-categoria{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
 }
 
 .newCategory{
@@ -216,6 +201,7 @@
 }
 
 .everyMonthTransactions{
+
     grid-column-start: 2;
     grid-column-end: 3;
     grid-row-start: 3;
@@ -224,10 +210,54 @@
 
 .lastTransactions > div {
     overflow-y: scroll; 
-    max-height: 600px;
+    max-height: 812px;
 }
 
-.tipoEntrada {
-    background-color: ;
+#insertButton
+, #insertButtonCategory{
+    max-width: 100px;
 }
 
+#adicionar-movimentos-div > div {
+    padding-top: 1rem;
+}
+
+/* Estatísticas */
+#categoryPercentage > div{
+    background-color: var(--bg-color);
+    color: beige;
+}
+
+.graphsBG{
+    background-color: var(--bg-color);
+    color: beige;
+}
+
+.cardStatistics{
+    height: 100%;
+    max-height: 500px;
+    padding: 2rem;
+    justify-content: center;
+    display: flex;
+}
+
+
+
+/* Account details */
+
+.containerDetails{
+    max-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.detailsTitle{
+    width: 100%;
+    text-align: start;
+}
+
+.conta-atual{
+    padding: 1rem;
+}

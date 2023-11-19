@@ -1,34 +1,20 @@
 <script>
-    // Script de criação de variável user com todos os movimentos a ser usada para as estatisticas
-    
-    user = {
-        'id': "<%= id %>",
-        'name': "<%= nome %>",
-        'email': "<%= email %>",
-        'name': "<%= nome %>",
-        'saldoAtual': <%= saldoAtual %>,
-        'saldoPrevisto': <%= saldoPrevisto %>,
-        'movimentos' : <%- JSON.stringify(movimentos) %>
-    }
+  // Script de criação de variável user com todos os movimentos a ser usada para as estatisticas
+
+  user = {
+    id: "<%= id %>",
+    name: "<%= nome %>",
+    email: "<%= email %>",
+  };
 </script>
-        
-        <div class="gridAccounts">
-            <div class="account1Details">
-                <h3>Detalhes das contas associadas</h3>
-                <p>Conta atual</p>
-                <p>Saldo</p>
-                <p>Nome</p>
-                <p>Número da conta</p>
 
-
-
-            </div>
-            <div class="account2Details">
-                <p>Conta 2</p>
-                <p>Saldo</p>
-                <p>Nome</p>
-                <p>Número da conta</p>
-            </div>
-
-
-        </div>
+<main class="container p-4 mt-5 mb-5 containerDetails">
+  <div class="detailsTitle">
+    <h3>Detalhes das contas associadas</h3>
+  </div>
+  <div id="cardDetails" class="card p-4 w-100 cardColor">
+    <div class="conta-atual"><span style="color: rgba(240, 248, 255, 0.603);" id="contaAtualDetalhes">Conta atual: </span></div>
+    <div class="conta-atual"><span style="color: rgba(240, 248, 255, 0.603);" id="saldoDetalhes">Saldo: </span></div>
+    <div class="conta-atual"><span style="color: rgba(240, 248, 255, 0.603);" id="emailDetalhes">Email: </span></div>
+  </div>
+</main>

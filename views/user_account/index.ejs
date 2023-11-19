@@ -5,156 +5,138 @@
                 'id': "<%= id %>",
                 'name': "<%= nome %>",
                 'email': "<%= email %>",
-                'name': "<%= nome %>",
-                'saldoAtual': <%= saldoAtual %>,
-                'saldoPrevisto': <%= saldoPrevisto %>,
-                'movimentos' : <%- JSON.stringify(movimentos) %>
             }
         </script>
         
-        <div class="grid">
-            <div class="saldoConta">
-                <div class="brandName flex-row w-50 ">
-                    <div class="iconDiv text-center">
-                        <i style="font-size: 4rem" class="bi bi-coin"></i>
-                    </div>
-                    <div class="nomeDaApp">
-                        <h3>MyFinance</h3>
-                    </div>
+        <main class="container pt-5">
+            <div class="grid">
+              <div class="saldoConta">
+                <div class="brandName flex-row w-50">
+                  <div class="iconDiv text-center">
+                    <!-- <i style="font-size: 4rem" class="bi bi-coin"></i> -->
+                    <img
+                      src="./images/logo.png"
+                      alt="Logo"
+                      height="128"
+                      width="128"
+                    />
+                  </div>
+                  <div class="nomeDaApp">
+                    <h3>FGO</h3>
+                  </div>
                 </div>
                 <div class="column w-50">
-                    <div class="w-100">
-                        <h5>Saldo Atual</h5>
-                    </div>
-                    <div id="saldo-actual-div" style="font-size: 4rem;" class="w-100">
-                        <%= saldoAtual %> €
-                    </div>
+                  <div class="w-100">
+                    <h5>Saldo Atual</h5>
+                  </div>
+                  <div
+                    id="saldo-actual-div"
+                    style="font-size: 4rem"
+                    class="w-100"
+                  ></div>
                 </div>
-
-            </div>
-            <div class="estatisticasHomepage">
+              </div>
+              <div class="estatisticasHomepage">
                 <div>
-                    <canvas id="historicoAnual"></canvas>
+                  <canvas id="historicoAnual"></canvas>
                 </div>
-            </div>
-            <div class="ultimosMovimentosHomepage">
+              </div>
+              <div class="ultimosMovimentosHomepage">
                 <h4>Últimos Movimentos</h4>
 
-                <div class="list-group" id="ultimo-movimentos-div">
-
-                    <!-- criar variável com data de hoje -->
-                    <% let hoje = new Date() %>
-                    <% let ano = hoje.getFullYear(), mes = hoje.getMonth()+1, dia = hoje.getDate(); %>
-                    <% let hojeFormatado = ano + '-' + (mes < 10 ? '0' : '') + mes + '-' + (dia < 10 ? '0' : '') + dia; %>
-                    
-                    <!-- imprimir movimentos passados -->
-                    <% let count = 0 %>
-                    <% for (let movimento of movimentos) { %>
-                        <% if (movimento['data'] <= hojeFormatado) { %>
-                            <% count++ %>
-                            <a href="#" data-id="<%= count %>" onclick="toggleActive(this)" class="list-group-item list-group-item-action border border-light
-                                <% // Alteração da cor do background consoante o tipo do movimento %>
-                                <% if (movimento.tipo == 2) { %>
-                                    bg-success text-dark bg-opacity-25
-                                <% } else if (movimento.tipo == 1) { %>
-                                    bg-danger text-dark bg-opacity-25
-                                <% } %>
-                                <%= movimento.valor %>
-                                 " aria-current="true">
-                                <div class="d-flex w-100 justify-content-between">
-                                    <h5 class="mb-1"><%= movimento.categoria %></h5>
-                                    <small><%= movimento.data %></small>
-                                </div>
-                                <div class="d-flex w-100 justify-content-between">
-                                    <p class="mb-1"><%= movimento.descricao %></p>
-                                    <h6 class="mb-1">
-                                        <% if (movimento.tipo == 1) { %>
-                                            <span>- </span>
-                                        <% } else if (movimento.tipo == 2) { %>
-                                            <span>+ </span>
-                                        <% } %>
-                                        <%= movimento.valor %> €
-                                        </h6>
-                                </div>
-                            </a>
-                        <!-- Este count determina o numero maximo de impressões a serem impressos, podemos ajustar depois -->
-                        <% if (count == 6) { break; } %>
-                    <% }} %>
+                <div class="list-group" id="ultimo-movimentos-div"></div>
+              </div>
+              <div
+                class="seccaoNoticias"
+                style="display: flex; flex-direction: column"
+              >
+                <div>
+                  <h3>Helpful Links</h3>
                 </div>
-
+                <div style="display: flex; gap: 1rem">
+                  <div class="card cardColor">
+                    <div class="card-body">
+                      <h5 class="card-title"><b>Business Week</b></h5>
+                      <h6 class="card-subtitle mb-2" style="color: grey">
+                        by Bloomberg
+                      </h6>
+                      <p class="card-text">
+                        Bloomberg Businessweek is a globally recognized magazine
+                        that provides information and interpretation of what is
+                        happening in the world of business.
+                      </p>
+                      <a
+                        href="https://www.bloomberg.com/businessweek"
+                        class="card-link"
+                        style="color: cadetblue"
+                        target="_blank"
+                        >Business Week</a
+                      >
+                    </div>
+                  </div>
+                  <div class="card cardColor">
+                    <div class="card-body">
+                      <h5 class="card-title"><b>Reuters</b></h5>
+                      <h6 class="card-subtitle mb-2" style="color: grey">
+                        by Thomson Reuters
+                      </h6>
+                      <p class="card-text">
+                        Reuters is the world's largest international multimedia
+                        news agency, providing its audience with the top world
+                        investing, business, stock market, technology, small
+                        business and personal finance news.
+                      </p>
+                      <a
+                        href="https://www.reuters.com/"
+                        class="card-link"
+                        style="color: cadetblue"
+                        target="_blank"
+                        >Reuters</a
+                      >
+                    </div>
+                  </div>
+                  <div class="card cardColor">
+                    <div class="card-body">
+                      <h5 class="card-title"><b>Forbes</b></h5>
+                      <h6 class="card-subtitle mb-2" style="color: grey">
+                        by Forbes
+                      </h6>
+                      <p class="card-text">
+                        Forbes is the home page of the world's business leaders,
+                        featuring original articles on finance, personal
+                        finance, investing, stock market, leadership, and
+                        marketing topics.
+                      </p>
+                      <a
+                        href="https://www.forbes.com/"
+                        class="card-link"
+                        style="color: cadetblue"
+                        target="_blank"
+                        >Forbes</a
+                      >
+                    </div>
+                  </div>
+                  <div class="card cardColor">
+                    <div class="card-body">
+                      <h5 class="card-title"><b>The Wall Street Journal</b></h5>
+                      <h6 class="card-subtitle mb-2" style="color: grey">
+                        by TWSJ
+                      </h6>
+                      <p class="card-text">
+                        Wall Street Journal is one of the world's most famous
+                        magazines, providing its wide audience with the latest
+                        business, financial and stock news.
+                      </p>
+                      <a
+                        href="https://www.wsj.com/"
+                        class="card-link"
+                        style="color: cadetblue"
+                        target="_blank"
+                        >The Wall Street Journal</a
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="seccaoNoticias">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
-                        <a href="#" class="card-link">Card link</a>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
-                        <a href="#" class="card-link">Card link</a>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
-                        <a href="#" class="card-link">Card link</a>
-                    </div>
-                </div>
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
-                        <h6 class="card-subtitle mb-2 text-body-secondary">Card subtitle</h6>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
-                        <a href="#" class="card-link">Card link</a>
-                    </div>
-                </div>
-
-            </div>
-
-        </div>
-
-        <script>
-            const ctx = document.getElementById('myChart');
-    
-            new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                    datasets: [{
-                        label: 'Ammount',
-                        data: [1200, 1900, 300, 500, 200, 300, 569, 2304, 234, 123, 6000],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    scales: {
-                        y: {
-                            beginAtZero: true
-                        }
-                    }
-                }
-            });
-    
-    
-            function toggleActive(el){
-                document.querySelectorAll('.list-group > a').forEach((el)=>{
-                    el.classList.remove('active');
-                });
-    
-                el.classList.add('active');
-                
-            }
-        </script>
-        <script src="js/access.js"></script>
+          </main>
