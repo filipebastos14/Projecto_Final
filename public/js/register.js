@@ -25,13 +25,18 @@ registerBtn.addEventListener('click', async (e) => {
                 'pass' : pass
             })
         })
-        if (response.redirected) {
-            window.location.href = response.url;
+        if (!response.ok) {
+            const errorData = await response.json();
+            
+            alert(`Error: ${errorData.error}`);
+
         } else {
-            console.log('Registration successful but no redirect.');
+            console.log('aqui');
+            window.location.href = response.url;
+            alert('Registo bem-sucedido!');
         }
     } catch (error) {
-        console.error('Error:', error);
+        alert('Erro')
     }
 
 });

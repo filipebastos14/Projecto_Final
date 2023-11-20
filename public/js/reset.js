@@ -1,9 +1,9 @@
 const formDataReset = document.querySelector('#resetForm');
 const resetBtn = document.querySelector('#reset-submit');
 
-resetBtn.addEventListener('click', (e) => {
-    console.log("clicado!");
-    e.preventDefault();
+resetBtn.addEventListener('click', async (e) => {
+    try {
+        e.preventDefault();
     let form = new FormData(formDataReset);
 
     email = form.get('email');
@@ -20,5 +20,21 @@ resetBtn.addEventListener('click', (e) => {
             'pass' : pass
         })
     })
-    .then(response => response)
+    if (!response.ok) {
+        const errorData = await response.json();
+        
+        alert(`Error: ${errorData.error}`);
+
+    } else {
+        const responseData = await response.json();
+
+        alert('Atualização bem-sucedida!');
+
+        window.location.href = '/login';
+            
+    }
+    } catch (error) {
+        console.log(error);
+        alert('Erro')
+    }    
 });

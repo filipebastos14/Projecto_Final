@@ -8,7 +8,8 @@ axios({
     url: `http://localhost:3000/getCategorias?userId=${user.id}`
 })
     .then(function (response) {
-        categorias.innerHTML = "";
+        categorias.innerHTML = '<option value="" selected disabled>Choose a category</option>';
+        
 
         response.data.forEach(categoria => {
             categorias.innerHTML += `
@@ -32,12 +33,15 @@ axios({
             corValor = movimento.tipo == 1 ? "text-danger" : "text-success";
 
             movimentosTotaisDiv.innerHTML += `
-            <a href="#" data-id="1" class="list-group-item list-group-item-action" aria-current="true">
+            <a href="#" data-id="${movimento.id}" class="list-group-item list-group-item-action" aria-current="true">
                         <div class="d-flex w-100 justify-content-between">
                             <h5 class="mb-1" contenteditable="true">${movimento.descricao}</h5>
                             <small contenteditable="true">${data.toLocaleDateString("en-US")}</small>
                         </div>
-                        <p class="mb-1 ${corValor}" contenteditable="true">${movimento.valor}€</p>
+                        <div class="d-flex w-100 justify-content-between">
+                            <p class="mb-1 ${corValor}" contenteditable="true">${movimento.valor}€</p>
+                            <button class="deleteMovement" data-id="${movimento.id}"><i class="bi bi-trash"></i></button>
+                        </div>
                     </a>`
         });
     });
@@ -56,13 +60,18 @@ axios({
             let corValor = '';
             corValor = movimento.tipo == 1 ? "text-danger" : "text-success";
 
+            console.log(corValor);
+
             proximasDespesasDiv.innerHTML += `
-                <a href="#" data-id="1" class="list-group-item list-group-item-action" aria-current="true">
+                <a href="#" data-id="${movimento.id}" class="list-group-item list-group-item-action" aria-current="true">
                             <div class="d-flex w-100 justify-content-between">
                                 <h5 class="mb-1" contenteditable="true">${movimento.descricao}</h5>
                                 <small contenteditable="true">${data.toLocaleDateString("en-US")}</small>
                             </div>
-                            <p class="mb-1 ${corValor}" contenteditable="true">${movimento.valor}€</p>
+                            <div class="d-flex w-100 justify-content-between">
+                                <p class="mb-1 ${corValor}" contenteditable="true">${movimento.valor}€</p>
+                                <button><i class="bi bi-trash"></i></button>
+                            </div>
                         </a>`
         });
     });
@@ -80,12 +89,16 @@ axios({
             let data = new Date(movimento.data);
 
             despesasFixasMensaisDiv.innerHTML += `
-                    <a href="#" data-id="1" class="list-group-item list-group-item-action" aria-current="true">
+                    <a href="#" data-id="${movimento.id}" class="list-group-item list-group-item-action" aria-current="true">
                                 <div class="d-flex w-100 justify-content-between">
                                     <h5 class="mb-1" contenteditable="true">${movimento.descricao}</h5>
                                     <small contenteditable="true">${data.toLocaleDateString("en-US")}</small>
                                 </div>
-                                <p class="mb-1 ${corValor}" contenteditable="true">${movimento.valor}€</p>
+                                <div class="d-flex w-100 justify-content-between">
+                                    <p class="mb-1 ${corValor}" contenteditable="true">${movimento.valor}€</p>
+                                    <button><i class="bi bi-trash"></i></button>
+                                </div>
+                                
                             </a>`
         });
     });
@@ -96,7 +109,7 @@ submitButton.addEventListener('click', (event) => {
     let form = new FormData(formData);
     let fixo = document.querySelector('#fixoInput');
     let movimento = {
-        user: '1',
+        user: user.id,
         descricao: form.get('descricao'),
         valor: form.get('valor'),
         data: form.get('data'),
@@ -111,7 +124,7 @@ submitButton.addEventListener('click', (event) => {
         data: movimento
     })
         .then(function (response) {
-            // location.reload();
+            location.reload();
         });
 
 
@@ -129,3 +142,36 @@ submitButtonCategory.addEventListener('click', (event) => {
             // location.reload();
         });
 })
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    const apagarMovimento = document.querySelectorAll('.deleteMovement');
+    console.log(apagarMovimento);
+
+    apagarMovimento.forEach(button => {
+        button.addEventListener('click', async (event) => {
+            console.log("clicado");
+
+            const movementId = event.target.getAttribute('data-id');
+
+            try {
+                const response = await fetch(`http://localhost:3000/delete-movement/${movementId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+            if (response.ok) {
+                window.location.reload();
+            } else {
+                console.error('Failed to delete movement');
+            }
+        } catch (error) {
+            console.error('Error:', error);
+        }
+        
+    });
+});
+});
+
