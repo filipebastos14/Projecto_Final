@@ -6,6 +6,12 @@
 const fs = require('fs');
 const path = './models/user.json';
 
+const DbConnect = require("../db/db");
+const db = DbConnect.getDbConnectInstance();
+
+const dateModel = require('../controllers/dateController');
+const dateModelFunctions = dateModel.getDateModelInstance()
+
 // 
 
 class userModel { 
@@ -13,51 +19,62 @@ class userModel {
         return new userModel();
     }
 
-    async guardarUser(data) {
-        return new Promise((resolve, reject) => {
+    async userInfo(userId) {
+        return new Promise(async (resolve, reject) => {
             try {
-                const dir = path.substring(0, path.lastIndexOf('/'));
-                if (!fs.existsSync(dir)) {
-                    fs.mkdirSync(dir, { recursive: true });
+
+                let result = await db.verificarUtilizadorID(userId);
+            
+                const user = result[0];
+                
+                let userDetalhes = {
+                  'id': userId,
+                  'email': user.email,
+                  'nome': user.nome,
+                  'saldoAtual': 0,
+                  'saldoPrevisto': 0,
+                  'movimentos': []
                 }
-        
-                fs.writeFileSync(path, data);
-                resolve(`Data saved to ${path}`)
-            } catch (error) {
-                console.error(error);
-            }
+
+                console.log(userDetalhes);
+            
+                const result2 = await db.movimentosUtilizador(user.id)
+                          
+                result2.forEach(resultado => {
+                  let dataFormatada = dateModelFunctions.converterFormato(resultado.data)
+                  let userMovimento = {
+                    'id': resultado.id,
+                    'categoria': resultado.cat,
+                    'valor': resultado.val,
+                    'data' : dataFormatada,
+                    'descricao' : resultado.descr,
+                    'tipo' : resultado.tipo
+                  }
+                    let atual = dateModelFunctions.hojeOuAntes(dataFormatada)
+                    if (resultado.tipo == 2) {
+                      userDetalhes.saldoPrevisto+=resultado.val
+                      atual = dateModelFunctions.hojeOuAntes(dataFormatada)
+                      if (atual) {
+                        userDetalhes.saldoAtual+=resultado.val
+                      }
+                    } else {
+                      userDetalhes.saldoPrevisto-=resultado.val
+                      if (atual) {
+                        userDetalhes.saldoAtual-=resultado.val
+                      }
+                    }
+                    userDetalhes.movimentos.push(userMovimento)
+                });
+
+                console.log(userDetalhes);
+            
+                resolve(userDetalhes) 
+              } catch (error) {
+                console.log(error);
+                console.log("Erro ao gerar user");
+              }
         })
     }
-
-    async ordenarMovimentos(user) {
-        return new Promise((resolve, reject) => {
-          try {
-            let movimentos = user['movimentos'];
-            let tamanho = movimentos.length;
-      
-            for (let x = 1; x < tamanho; x++) {
-              if (movimentos[x - 1]['data'] < movimentos[x]['data']) {
-                for (let y = x; y > 0; y--) {
-                  let a = movimentos[y - 1];
-                  let b = movimentos[y];
-      
-                  if (a['data'] < b['data']) {
-                    movimentos[y - 1] = b;
-                    movimentos[y] = a;
-                  }
-                }
-              }
-            }
-      
-            this.guardarUser(JSON.stringify(user, null, 2));
-      
-
-            resolve(user);
-          } catch (error) {
-            reject(error);
-          }
-        });
-      }
 
     adicionarMovimento(movimento) {
         let data = require('../models/user.json')

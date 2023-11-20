@@ -4,12 +4,12 @@ const bodyParser = require("body-parser");
 let instance = null;
 
 const con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "route",
-  database: "projecto_final",
-  port: "3306",
-});
+    host: "localhost",
+    user: "root",
+    password: "",
+    database: "testepf",
+    port: "3306"
+})
 
 con.connect((err) => {
   if (err) {
@@ -24,55 +24,69 @@ class DbConnect {
     return instance ? instance : new DbConnect();
   }
 
-  async verificarUtilizador(email) {
-    try {
-      return new Promise((resolve, reject) => {
-        let query =
-          "SELECT id, nome, email, pass FROM utilizador WHERE email = ?";
-
-        con.query(query, email, (err, result) => {
-          if (err) {
-            reject(new Error(err.message));
-          } else {
-            if (result.length > 0) {
-              resolve(result);
-            } else {
-              reject(new Error("Utilizador não existe"));
-            }
-          }
-        });
-      });
-    } catch (error) {
-      return error;
+    async verificarUtilizador(email) {
+        try {
+            return new Promise((resolve, reject) => {
+                let query = 'SELECT id, nome, email, pass FROM utilizador WHERE email = ?';
+    
+                con.query(query, email, (err, result) => {
+                    if (err) {
+                        reject(new Error(err.message));
+                    } else {
+                        resolve(result.length > 0 ? result : null);
+                    }
+                });
+            });
+        } catch (error) {
+          return error;
+        }
     }
+
+    async verificarUtilizadorID(id) {
+      try {
+          return new Promise((resolve, reject) => {
+              let query = 'SELECT id, nome, email, pass FROM utilizador WHERE id = ?';
+  
+              con.query(query, id, (err, result) => {
+                  if (err) {
+                      reject(new Error(err.message));
+                  } else {
+                      resolve(result.length > 0 ? result : null);
+                  }
+              });
+          });
+      } catch (error) {
+          return error;
+      }
   }
 
-  async registarUtilizador(object) {
-    try {
-      let result = await new Promise((resolve, reject) => {
-        let query = "insert into utilizador(nome,email,pass) values (?)";
-        let convertedObject = [[object.nome, object.email, object.pass]];
+    async registarUtilizador(object) {
+        try {
+            return await new Promise((resolve, reject) => {
 
-        con.query(query, convertedObject, (err, result) => {
-          if (err) {
-            reject(new Error(err.message));
-          } else {
-            resolve(result);
-          }
-        });
-      });
+              let query = "insert into utilizador(nome,email,pass) values (?)"
+              let convertedObject = [[object.nome,object.email,object.pass]]
 
-      return result;
-    } catch (error) {
-      console.log(error);
+              con.query(query, convertedObject, (err, result) => {
+                if (err) {
+                  reject(new Error(err.message));
+                } else {
+                  resolve(result);
+                }
+              });
+            });
+
+        } catch (error) {
+            console.log(error);
+        }
     }
-  }
+
 
   async movimentosUtilizador(id) {
     try {
       let result = await new Promise((resolve, reject) => {
         let query =
-          "SELECT c.categoria AS cat, m.valor AS val, m.data AS data, m.descricao AS descr, m.tipo AS tipo, m.id AS id FROM movimento m JOIN categoria c ON m.id_categoria = c.id WHERE m.id_utilizador = ?";
+          "SELECT c.categoria AS cat, m.valor AS val, m.data AS data, m.descricao AS descr, m.tipo AS tipo, m.id AS id FROM movimento m JOIN categoria c ON m.id_categoria = c.id WHERE m.id_utilizador = ? ORDER BY `m`.`data` DESC";
         con.query(query, id, (err, result) => {
           if (err) {
             reject(new Error(err.message));
@@ -124,49 +138,42 @@ class DbConnect {
     }
   }
 
-  async verMovimento(id) {
-    try {
-      let result = await new Promise((resolve, reject) => {
-        let query = "select * from movimento where id_utilizador = ?";
-        con.query(query, parseInt(id), (err, result) => {
-          if (err) {
-            reject(new Error(err.message));
-          } else {
-            resolve(result);
-          }
-        });
-      });
+  async apagarMovimento(id_utilizador) {
+    let result = await new Promise((resolve, reject) => {
+      let query = 'DELETE FROM movimento WHERE id = ?';
 
-      return result;
-    } catch (error) {
-      console.log(error);
-    }
+      con.query(query, id_utilizador,  (error, results) => {
+        resolve(results);
+      });
+    });
+
+    return result;
   }
 
   async atualizarUtilizador(object) {
+        
     try {
-      let result = await new Promise((resolve, reject) => {
-        let query = "update utilizador set pass = ? where email = ?";
-        let convertedObject = [[object.email, object.pass]];
+        return await new Promise((resolve, reject) => {
 
-        con.query(query, convertedObject, (err, result) => {
-          if (err) {
-            reject(new Error(err.message));
-          } else {
-            resolve(result);
-          }
-        });
-      });
+            let query = `update utilizador set pass = '${object.pass}' where email = '${object.email}'`
+            console.log(query);
+            con.query(query,(err,result) => {
+                if (err) {
+                    reject(new Error(err.message));
+                } else {
+                    resolve(result);
+                }
+            })
+        })
 
-      return result;
     } catch (error) {
-      console.log("catch 3: " + error);
+        console.log("catch 3: "+error);
     }
-  }
+}
 
   async saldoActual(id_utilizador) {
     let result = await new Promise((resolve, reject) => {
-      let sql = `SELECT ROUND(SUM(valor), 2) as total FROM movimento WHERE id_utilizador = ${id_utilizador};`;
+      let sql = `SELECT ROUND(SUM(valor), 2) as total FROM movimento WHERE id_utilizador = ${id_utilizador} and data <= CURRENT_DATE();`;
 
       con.query(sql,  (error, results) => {
         resolve(results);
@@ -176,11 +183,13 @@ class DbConnect {
     return result;
   }
 
+  // DATA
+
   async ultimosMovimentos(id_utilizador) {
     let result = await new Promise((resolve, reject) => {
-      let sql = `SELECT descricao, valor, data, tipo 
+      let sql = `SELECT id, descricao, valor, data, tipo 
     from movimento 
-    WHERE id_utilizador = ${id_utilizador}
+    WHERE id_utilizador = ${id_utilizador} and data <= CURRENT_DATE()
     order by data desc
     limit 10;`;
 
@@ -212,9 +221,9 @@ class DbConnect {
 
   async movimentosTotais(id_utilizador) {
     let result = await new Promise((resolve, reject) => {
-      let sql = `select data, valor, descricao, tipo
+      let sql = `select id, data, valor, descricao, tipo
         from movimento
-        where fixo = 0
+        where fixo = 0 and data <= CURRENT_DATE()
         and id_utilizador = ${id_utilizador}
         order by data desc;`;
 
@@ -271,9 +280,10 @@ class DbConnect {
   async proximasDespesas(id_utilizador) {
 
     let result = await new Promise((resolve, reject) => {
-      let sql = `select data, valor, descricao
+      let sql = `select id, data, valor, descricao
         from movimento
-        where fixo = 1
+        where fixo = 0
+        and data > CURRENT_DATE()
         and id_utilizador = ${id_utilizador}
         order by data;`;
 
@@ -287,7 +297,7 @@ class DbConnect {
 
   async despesasFixasMensais(id_utilizador) {
     let result = await new Promise((resolve, reject) => {
-      let sql = `select data, valor, descricao, tipo
+      let sql = `select id, data, valor, descricao, tipo
         from movimento
         where fixo = 1
         and id_utilizador = ${id_utilizador}

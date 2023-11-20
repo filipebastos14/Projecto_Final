@@ -2,6 +2,7 @@ const express = require("express");
 const mysql = require("mysql");
 const expressLayouts = require("express-ejs-layouts");
 const userPath = "./models/user.json";
+const session = require('express-session');
 
 const ejs = require("ejs");
 const path = require("path");
@@ -16,6 +17,13 @@ app.use(express.static("public"));
 app.use(expressLayouts);
 app.set("layout", "layout/main");
 
+app.use(session({
+  secret: 'fc22e0b3d3bb7872a7192e1c0184473c2e0b37e9c9b6590a47b697f97429e874',
+  resave: false,
+  saveUninitialized: true,
+}));
+
+
 // Configuração do ejs
 app.set("view engine", "ejs");
 app.set("views", path.join("views/"));
@@ -28,14 +36,16 @@ const userModel = require("./controllers/userController");
 const { TextEncoderStream } = require("node:stream/web");
 const userModelFunctions = userModel.getUserInstance();
 
-const dateModel = require("./controllers/dateController");
-const { error } = require("console");
-const dateModelFunctions = dateModel.getDateModelInstance();
+const dateModel = require('./controllers/dateController');
+const dateModelFunctions = dateModel.getDateModelInstance()
 
 //pagina de login
-app.get("/login", (req, res) => {
-  const userOutput = require(userPath);
-  if (userOutput["email"] == null) {
+app.get("/login", async (req, res) => {
+
+  const userId = req.session.userId;
+  console.log("Request " + userId);
+
+  if (!userId) {
     res.render("login/login", { layout: "layout/visitor" });
   } else {
     res.redirect("/");
@@ -43,19 +53,23 @@ app.get("/login", (req, res) => {
 });
 
 // pagina de registo
-app.get("/register", (req, res) => {
-  const userOutput = require(userPath);
-  if (userOutput["email"] == null) {
-    res.render("login/newUser", { layout: "layout/visitor" });
-  } else {
-    res.reredirect("/");
-  }
-});
+app.get('/register', async (req,res) => {
+    const userId = req.session.userId;
+    console.log("Request " + userId);
+
+    if (!userId) {
+        res.render('login/newUser', {layout: 'layout/visitor'})
+    } else {
+        res.redirect('/');
+    }
+})
 
 // pagina de recuperação
-app.get("/reset", (req, res) => {
-  const userOutput = require(userPath);
-  if (userOutput["email"] == null) {
+app.get("/reset", async (req, res) => {
+    const userId = req.session.userId;
+    console.log("Request " + userId);
+
+    if (!userId) {
     res.render("login/recoverPassword", { layout: "layout/visitor" });
   } else {
     res.redirect("user_account/index");
@@ -63,119 +77,121 @@ app.get("/reset", (req, res) => {
 });
 
 // Homepage
-app.get("/", (req, res) => {
-  const userOutput = require(userPath);
-  if (userOutput["email"] == null) {
-    res.redirect("/login");
-  } else {
-    res.render("user_account/index", userOutput);
-  }
-});
+app.get('/', async (req, res) => {
+
+    const userId = req.session.userId;
+    console.log("Request " + userId);
+
+    if (!userId) {
+        res.redirect('/login')
+    } else {
+      userOutput = await userModelFunctions.userInfo(userId)
+      console.log(userOutput);
+      res.render('user_account/index', userOutput);
+    } 
+})
 
 // Página detalhes da conta
-app.get("/detalhes", (req, res) => {
-  const userOutput = require(userPath);
-  if (userOutput["email"] == null) {
+app.get("/detalhes", async (req, res) => {
+    const userId = req.session.userId;
+    console.log("Request " + userId);
+
+    if (!userId) {
     res.redirect("/login");
   } else {
+    userOutput = await userModelFunctions.userInfo(userId)
     res.render("user_account/accountsDetails", userOutput);
   }
 });
 
 // Página de categorias/estatisticas
-app.get("/categorias", (req, res) => {
-  const userOutput = require(userPath);
-  if (userOutput["email"] == null) {
+app.get("/categorias", async (req, res) => {
+    const userId = req.session.userId; 
+    console.log("Request " + userId);
+
+    if (!userId) {
     res.redirect("/login");
   } else {
+    userOutput = await userModelFunctions.userInfo(userId)
     res.render("user_account/categories", userOutput);
   }
 });
 
 // pagina de movimentos
-app.get("/movimentos", (req, res) => {
-  const userOutput = require(userPath);
-  if (userOutput["email"] == null) {
+app.get("/movimentos", async (req, res) => {
+    // const userId = req.session.userId; Ativar após teste
+    const userId = 14 // Apagar após teste
+    console.log("Request " + userId);
+
+    if (!userId) {
     res.redirect("/login");
   } else {
+    userOutput = await userModelFunctions.userInfo(userId)
     res.render("user_account/movements", userOutput);
   }
 });
 
-app.post("/user/new", async (req, res) => {
-  try {
-    let object = req.body;
-    const result = await db.registarUtilizador(object);
+app.post('/user/new', async (req,res) => {
+    try {
+        let object = req.body;
 
-    res.redirect("/login");
-  } catch (error) {
-    console.error("Error:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
+        const result = await db.verificarUtilizador(object.email)
 
-app.get("/user/login", async (req, res) => {
-  try {
-    const email = req.query.email;
-    const pass = req.query.pass;
-
-    let result = await db.verificarUtilizador(email);
-
-    const user = result[0];
-
-    // compara email e pass com resultados da query
-    if (user.email === email && user.pass == pass) {
-      // se corresponder
-      console.log("autenticado");
-      let userDetalhes = {
-        id: user.id,
-        email: user.email,
-        nome: user.nome,
-        saldoAtual: 0,
-        saldoPrevisto: 0,
-        movimentos: [],
-      };
-
-      const result2 = await db.movimentosUtilizador(user.id);
-
-      result2.forEach((resultado) => {
-        let dataFormatada = dateModelFunctions.converterFormato(resultado.data);
-        let userMovimento = {
-          id: resultado.id,
-          categoria: resultado.cat,
-          valor: resultado.val,
-          data: dataFormatada,
-          descricao: resultado.descr,
-          tipo: resultado.tipo,
-        };
-        let atual = dateModelFunctions.hojeOuAntes(dataFormatada);
-        if (resultado.tipo == 2) {
-          userDetalhes.saldoPrevisto += resultado.val;
-          atual = dateModelFunctions.hojeOuAntes(dataFormatada);
-          if (atual) {
-            userDetalhes.saldoAtual += resultado.val;
-          }
+        if (result != null) {
+            // Mensagem de conflito
+            res.status(409).json({ error: 'Este email já está registado, registe-se com outro email ou faça login' });
         } else {
-          userDetalhes.saldoPrevisto -= resultado.val;
-          if (atual) {
-            userDetalhes.saldoAtual -= resultado.val;
-          }
+            // Procede com registo
+            await db.registarUtilizador(object);
+            res.redirect('/login');
         }
-        userDetalhes.movimentos.push(userMovimento);
-      });
 
-      userOrdenado = await userModelFunctions.ordenarMovimentos(userDetalhes);
-      //res.render('user_account/index', userOrdenado);
-      res.redirect("/");
-    } else {
-      // se dados não corresponderem
-      res.send("Email ou pass incorreto")
-      //res.status(401).send("Email ou pass incorreto");
+        } catch (error) {
+            console.error('Error:', error);
+            res.status(500).json({ error: 'Internal Server Error' });
+        }
+})
+
+
+app.get('/user/login', async (req,res) => {
+    try {
+        const email = req.query.email;
+        const pass = req.query.pass;
+
+      let result = await db.verificarUtilizador(email);
+
+        if (result != null) {
+            const user = result[0];
+            console.log(user);
+
+            // // compara email e pass com resultados da query
+            if (user.pass == pass) {
+
+            //     // se corresponder
+            const userId = user.id;
+
+            console.log("userId:" + userId);
+
+            req.session.userId = userId;
+
+            res.json({ success: true, userId: userId });
+                   
+            } else {
+                // se dados não corresponderem 
+                console.log("Email ou pass incorretos");
+                res.status(401).json({ error: "Email ou pass incorretos" });
+            }
+
+        } else {
+          res.status(409).json({ error: "Utilizador não encontrado" });
+        }
+        
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
-  } catch (error) {
-    console.log(error);
-  }
-});
+})
+
 
 app.post("/mov/new", async (req, res) => {
   try {
@@ -203,33 +219,56 @@ app.post("/mov/new", async (req, res) => {
   }
 });
 
-app.get("/user/mov", (req, res) => {
-  const id = req.query.id;
-  const result = db.verMovimento(id);
-
-  return result;
-});
-
 app.post("/user/reset", async (req, res) => {
   try {
     object = req.body;
 
-    const result = await db.verificarUtilizador(object["email"]);
+    let result = await db.verificarUtilizador(object["email"]);
 
-    const result2 = await db.atualizarUtilizador(object);
+    if (result != null) {
+        const result2 = await db.atualizarUtilizador(object);
 
-    res.redirect("/login");
-  } catch (error) {}
+        res.status(201).json(result2);
+    } else {
+      res.status(409).json({ error: "Utilizador não encontrado" });
+    }
+    
+} catch (error) {
+    console.log(error);
+    res.status(500).json({ error: 'Internal Server Error' });
+}
 });
+
 
 app.get("/logout", async (req, res) => {
   try {
-    await userModelFunctions.logout();
-
-    res.redirect("/login");
+    req.session.destroy((err) => {
+      if (err) {
+        console.error('Error destroying session:', err);
+        return res.status(500).send('Internal Server Error');
+      }
+  
+      // Redirect the user to the login page or any other page
+      res.redirect('/login');;
+    })
   } catch (error) {
     console.log(error);
   }
+});
+
+app.delete('/delete-movement/:id', (req, res) => {
+
+  try {
+    const movimentoId = parseInt(req.params.id);
+
+    // Find the index of the movement with the specified ID
+    const resultado = db.apagarMovimento(movimentoId)
+
+    res.status(200).json({ success: true, message: 'Movimento apagado com sucesso' });
+  } catch (error) {
+    res.status(500).json({ error: 'Internal Server Error' }); 
+  }
+  
 });
 
 // DATA
