@@ -40,8 +40,10 @@ axios({
                         </div>
                         <div class="d-flex w-100 justify-content-between">
                             <p class="mb-1 ${corValor}" contenteditable="true">${movimento.valor}€</p>
-                            <button class="deleteMovement" data-id="${movimento.id}"><i class="bi bi-trash"></i></button>
-                        </div>
+                            <form action="/delete-movement/${movimento.id}" method="post">
+                            <button class="deleteMovement"><i class="bi bi-trash"></i></button>
+                            </form>
+                            </div>
                     </a>`
         });
     });
@@ -70,7 +72,9 @@ axios({
                             </div>
                             <div class="d-flex w-100 justify-content-between">
                                 <p class="mb-1 ${corValor}" contenteditable="true">${movimento.valor}€</p>
-                                <button><i class="bi bi-trash"></i></button>
+                                <form action="/delete-movement/${movimento.id}" method="post">
+                            <button class="deleteMovement"><i class="bi bi-trash"></i></button>
+                            </form>
                             </div>
                         </a>`
         });
@@ -96,7 +100,9 @@ axios({
                                 </div>
                                 <div class="d-flex w-100 justify-content-between">
                                     <p class="mb-1 ${corValor}" contenteditable="true">${movimento.valor}€</p>
-                                    <button><i class="bi bi-trash"></i></button>
+                                    <form action="/delete-movement/${movimento.id}" method="post">
+                            <button class="deleteMovement"><i class="bi bi-trash"></i></button>
+                            </form>
                                 </div>
                                 
                             </a>`
@@ -142,36 +148,3 @@ submitButtonCategory.addEventListener('click', (event) => {
             // location.reload();
         });
 })
-
-
-document.addEventListener('DOMContentLoaded', () => {
-    const apagarMovimento = document.querySelectorAll('.deleteMovement');
-    console.log(apagarMovimento);
-
-    apagarMovimento.forEach(button => {
-        button.addEventListener('click', async (event) => {
-            console.log("clicado");
-
-            const movementId = event.target.getAttribute('data-id');
-
-            try {
-                const response = await fetch(`http://localhost:3000/delete-movement/${movementId}`, {
-                method: 'DELETE',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            if (response.ok) {
-                window.location.reload();
-            } else {
-                console.error('Failed to delete movement');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-        }
-        
-    });
-});
-});
-

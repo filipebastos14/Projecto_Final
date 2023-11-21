@@ -1,18 +1,8 @@
-// const user = {
-//     user : require('../models/user.json'),
-//     setUser : function(data) {this.user = data}
-// }
-
-const fs = require('fs');
-const path = './models/user.json';
-
 const DbConnect = require("../db/db");
 const db = DbConnect.getDbConnectInstance();
 
 const dateModel = require('../controllers/dateController');
 const dateModelFunctions = dateModel.getDateModelInstance()
-
-// 
 
 class userModel { 
     static getUserInstance() {
@@ -51,16 +41,15 @@ class userModel {
                     'tipo' : resultado.tipo
                   }
                     let atual = dateModelFunctions.hojeOuAntes(dataFormatada)
-                    if (resultado.tipo == 2) {
-                      userDetalhes.saldoPrevisto+=resultado.val
-                      atual = dateModelFunctions.hojeOuAntes(dataFormatada)
-                      if (atual) {
-                        userDetalhes.saldoAtual+=resultado.val
-                      }
-                    } else {
+                    if (resultado.tipo == 1) {
                       userDetalhes.saldoPrevisto-=resultado.val
                       if (atual) {
                         userDetalhes.saldoAtual-=resultado.val
+                      }
+                    } else {
+                      userDetalhes.saldoPrevisto+=resultado.val
+                      if (atual) {
+                        userDetalhes.saldoAtual+=resultado.val
                       }
                     }
                     userDetalhes.movimentos.push(userMovimento)
@@ -74,47 +63,6 @@ class userModel {
                 console.log("Erro ao gerar user");
               }
         })
-    }
-
-    adicionarMovimento(movimento) {
-        let data = require('../models/user.json')
-        let categorias = require('../models/categorias.json')
-        let categoria = categorias['categorias']
-
-        movimento['categoria'] = categoria[movimento['categoria']]
-
-        data["movimentos"].push(movimento)
-
-        let hoje = new Date()
-        let ano = hoje.getFullYear(), mes = hoje.getMonth()+1, dia = hoje.getDate();
-        let hojeFormatado = ano + '-' + (mes < 10 ? '0' : '') + mes + '-' + (dia < 10 ? '0' : '') + dia;
-
-        
-        if (movimento['tipo'] == 1) {
-            data['saldoPrevisto'] -= movimento['valor']
-            if (movimento['data'] <= hojeFormatado) {
-                data['saldoAtual'] -= movimento['valor']
-            }
-        } else {
-            data['saldoPrevisto'] += movimento['valor']
-            if (movimento['data'] <= hojeFormatado) {
-                data['saldoAtual'] -= movimento['valor']
-            }
-        }
-            
-        this.ordenarMovimentos(data)
-    }
-
-    async logout() {
-        return new Promise((resolve, reject) => {
-            try {
-                fs.writeFileSync(path,'{"email": null}')
-                resolve('Logged out')
-            } catch (error) {
-                console.log(error);
-            }
-        })
-        
     }
 }
 

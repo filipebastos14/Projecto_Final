@@ -6,7 +6,13 @@ axios({
         let saldoActualDiv = document.querySelector('#saldo-actual-div');
         let total = response.data[0].total;
 
-        saldoActualDiv.innerHTML = `<p>${total}€</p>`;
+        if (total == null) {
+            saldo = 0
+        } else {
+            saldo = total
+        }
+
+        saldoActualDiv.innerHTML = `<p>${saldo}€</p>`;
     });
 
 

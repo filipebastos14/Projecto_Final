@@ -99,42 +99,7 @@ class DbConnect {
       return result;
     } catch (error) {
       console.error(error);
-      throw error; // Re-throw the error to handle it in the calling code
-    }
-  }
-
-  async novoMovimento(object) {
-    try {
-      let query =
-        "INSERT INTO movimento (id_utilizador, id_categoria, valor, data_movimento, descricao, tipo_movimento) VALUES (?)";
-
-      const result = await new Promise((resolve, reject) => {
-        con.query(
-          query,
-          [
-            [
-              object.user,
-              object.categoria,
-              object.valor,
-              object.data,
-              object.descricao,
-              object.tipo,
-            ],
-          ],
-          (err, result) => {
-            if (err) {
-              reject(new Error(err.message));
-            } else {
-              resolve(result);
-            }
-          }
-        );
-      });
-
-      return result;
-    } catch (error) {
-      console.error("Error:", error);
-      throw new Error(error.message);
+      throw error; 
     }
   }
 
@@ -171,6 +136,8 @@ class DbConnect {
     }
 }
 
+  // DATA
+
   async saldoActual(id_utilizador) {
     let result = await new Promise((resolve, reject) => {
       let sql = `SELECT ROUND(SUM(valor), 2) as total FROM movimento WHERE id_utilizador = ${id_utilizador} and data <= CURRENT_DATE();`;
@@ -182,8 +149,6 @@ class DbConnect {
 
     return result;
   }
-
-  // DATA
 
   async ultimosMovimentos(id_utilizador) {
     let result = await new Promise((resolve, reject) => {
