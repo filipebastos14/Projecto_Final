@@ -1,142 +1,125 @@
-        <script>
-            // Script de criação de variável user com todos os movimentos a ser usada para as estatisticas
-            
-            user = {
-                'id': "<%= id %>",
-                'name': "<%= nome %>",
-                'email': "<%= email %>",
-            }
-        </script>
-        
-        <main class="container pt-5">
-            <div class="grid">
-              <div class="saldoConta">
-                <div class="brandName flex-row w-50">
-                  <div class="iconDiv text-center">
-                    <!-- <i style="font-size: 4rem" class="bi bi-coin"></i> -->
-                    <img
-                      src="./images/logo.png"
-                      alt="Logo"
-                      height="128"
-                      width="128"
-                    />
-                  </div>
-                  <div class="nomeDaApp">
-                    <h3>FGO</h3>
-                  </div>
-                </div>
-                <div class="column w-50">
-                  <div class="w-100">
-                    <h5>Saldo Atual</h5>
-                  </div>
-                  <div
-                    id="saldo-actual-div"
-                    style="font-size: 4rem"
-                    class="w-100"
-                  ></div>
-                </div>
-              </div>
-              <div class="estatisticasHomepage">
-                <div>
-                  <canvas id="historicoAnual"></canvas>
-                </div>
-              </div>
-              <div class="ultimosMovimentosHomepage">
-                <h4>Últimos Movimentos</h4>
+<script>
+  // Script de criação de variável user com todos os movimentos a ser usada para as estatisticas
 
-                <div class="list-group" id="ultimo-movimentos-div"></div>
-              </div>
-              <div
-                class="seccaoNoticias"
-                style="display: flex; flex-direction: column"
-              >
-                <div>
-                  <h3>Helpful Links</h3>
-                </div>
-                <div style="display: flex; gap: 1rem">
-                  <div class="card cardColor">
-                    <div class="card-body">
-                      <h5 class="card-title"><b>Business Week</b></h5>
-                      <h6 class="card-subtitle mb-2" style="color: grey">
-                        by Bloomberg
-                      </h6>
-                      <p class="card-text">
-                        Bloomberg Businessweek is a globally recognized magazine
-                        that provides information and interpretation of what is
-                        happening in the world of business.
-                      </p>
-                      <a
-                        href="https://www.bloomberg.com/businessweek"
-                        class="card-link"
-                        style="color: cadetblue"
-                        target="_blank"
-                        >Business Week</a
-                      >
-                    </div>
-                  </div>
-                  <div class="card cardColor">
-                    <div class="card-body">
-                      <h5 class="card-title"><b>Reuters</b></h5>
-                      <h6 class="card-subtitle mb-2" style="color: grey">
-                        by Thomson Reuters
-                      </h6>
-                      <p class="card-text">
-                        Reuters is the world's largest international multimedia
-                        news agency, providing its audience with the top world
-                        investing, business, stock market, technology, small
-                        business and personal finance news.
-                      </p>
-                      <a
-                        href="https://www.reuters.com/"
-                        class="card-link"
-                        style="color: cadetblue"
-                        target="_blank"
-                        >Reuters</a
-                      >
-                    </div>
-                  </div>
-                  <div class="card cardColor">
-                    <div class="card-body">
-                      <h5 class="card-title"><b>Forbes</b></h5>
-                      <h6 class="card-subtitle mb-2" style="color: grey">
-                        by Forbes
-                      </h6>
-                      <p class="card-text">
-                        Forbes is the home page of the world's business leaders,
-                        featuring original articles on finance, personal
-                        finance, investing, stock market, leadership, and
-                        marketing topics.
-                      </p>
-                      <a
-                        href="https://www.forbes.com/"
-                        class="card-link"
-                        style="color: cadetblue"
-                        target="_blank"
-                        >Forbes</a
-                      >
-                    </div>
-                  </div>
-                  <div class="card cardColor">
-                    <div class="card-body">
-                      <h5 class="card-title"><b>The Wall Street Journal</b></h5>
-                      <h6 class="card-subtitle mb-2" style="color: grey">
-                        by TWSJ
-                      </h6>
-                      <p class="card-text">
-                        Wall Street Journal is one of the world's most famous
-                        magazines, providing its wide audience with the latest
-                        business, financial and stock news.
-                      </p>
-                      <a
-                        href="https://www.wsj.com/"
-                        class="card-link"
-                        style="color: cadetblue"
-                        target="_blank"
-                        >The Wall Street Journal</a
-                      >
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </main>
+  user = {
+    id: "<%= id %>",
+    name: "<%= nome %>",
+    email: "<%= email %>",
+  };
+</script>
+
+<main class="container pt-5">
+  <h3 id="idSaudacao"></h3>
+  <div class="grid">
+    <div class="saldoConta">
+      <div class="brandName flex-row w-50">
+        <div class="iconDiv text-center">
+          <img src="./images/logo.png" alt="Logo" height="128" width="128" />
+        </div>
+        <div class="nomeDaApp">
+          <h3>FGO</h3>
+        </div>
+      </div>
+      <div class="column w-50">
+        <div class="w-100">
+          <h5>Current Balance</h5>
+        </div>
+        <div id="saldo-actual-div" style="font-size: 4rem" class="w-100"></div>
+        <h6 style="color: cadetblue;">Expected Balance</h6>
+        <div id="saldo-previsto-div" class="w-100" style="font-size: 1.5rem; color: cadetblue;"></div>
+      </div>
+    </div>
+    <div class="estatisticasHomepage">
+      <div>
+        <canvas id="historicoAnual"></canvas>
+      </div>
+    </div>
+    <div class="ultimosMovimentosHomepage">
+      <h4>Latest Transactions</h4>
+
+      <div class="list-group" id="ultimo-movimentos-div"></div>
+    </div>
+    <div class="seccaoNoticias" style="display: flex; flex-direction: column">
+      <div>
+        <h3>Helpful Links</h3>
+      </div>
+      <div style="display: flex; gap: 1rem">
+        <div class="card cardColor">
+          <div class="card-body">
+            <h5 class="card-title"><b>Business Week</b></h5>
+            <h6 class="card-subtitle mb-2" style="color: grey">by Bloomberg</h6>
+            <p class="card-text">
+              Bloomberg Businessweek is a globally recognized magazine that
+              provides information and interpretation of what is happening in
+              the world of business.
+            </p>
+            <a
+              href="https://www.bloomberg.com/businessweek"
+              class="card-link"
+              style="color: cadetblue"
+              target="_blank"
+              >Business Week</a
+            >
+          </div>
+        </div>
+        <div class="card cardColor">
+          <div class="card-body">
+            <h5 class="card-title"><b>Reuters</b></h5>
+            <h6 class="card-subtitle mb-2" style="color: grey">
+              by Thomson Reuters
+            </h6>
+            <p class="card-text">
+              Reuters is the world's largest international multimedia news
+              agency, providing its audience with the top world investing,
+              business, stock market, technology, small business and personal
+              finance news.
+            </p>
+            <a
+              href="https://www.reuters.com/"
+              class="card-link"
+              style="color: cadetblue"
+              target="_blank"
+              >Reuters</a
+            >
+          </div>
+        </div>
+        <div class="card cardColor">
+          <div class="card-body">
+            <h5 class="card-title"><b>Forbes</b></h5>
+            <h6 class="card-subtitle mb-2" style="color: grey">by Forbes</h6>
+            <p class="card-text">
+              Forbes is the home page of the world's business leaders, featuring
+              original articles on finance, personal finance, investing, stock
+              market, leadership, and marketing topics.
+            </p>
+            <a
+              href="https://www.forbes.com/"
+              class="card-link"
+              style="color: cadetblue"
+              target="_blank"
+              >Forbes</a
+            >
+          </div>
+        </div>
+        <div class="card cardColor">
+          <div class="card-body">
+            <h5 class="card-title"><b>The Wall Street Journal</b></h5>
+            <h6 class="card-subtitle mb-2" style="color: grey">by TWSJ</h6>
+            <p class="card-text">
+              Wall Street Journal is one of the world's most famous magazines,
+              providing its wide audience with the latest business, financial
+              and stock news.
+            </p>
+            <a
+              href="https://www.wsj.com/"
+              class="card-link"
+              style="color: cadetblue"
+              target="_blank"
+              >The Wall Street Journal</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>

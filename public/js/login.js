@@ -18,7 +18,6 @@ loginBtn.addEventListener('click', async (e) => {
         method: 'GET'
         })
         if (!response.ok) {
-            console.log("not okay");
             const errorData = await response.json();
             
             alert(`Error: ${errorData.error}`);

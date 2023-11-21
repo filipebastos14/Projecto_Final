@@ -25,8 +25,6 @@ class userModel {
                   'saldoPrevisto': 0,
                   'movimentos': []
                 }
-
-                console.log(userDetalhes);
             
                 const result2 = await db.movimentosUtilizador(user.id)
                           
@@ -54,8 +52,6 @@ class userModel {
                     }
                     userDetalhes.movimentos.push(userMovimento)
                 });
-
-                console.log(userDetalhes);
             
                 resolve(userDetalhes) 
               } catch (error) {

@@ -4,12 +4,12 @@ const bodyParser = require("body-parser");
 let instance = null;
 
 const con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "testepf",
-    port: "3306"
-})
+  host: "localhost",
+  user: "root",
+  password: "route",
+  database: "projecto_final",
+  port: "3306",
+});
 
 con.connect((err) => {
   if (err) {
@@ -24,63 +24,61 @@ class DbConnect {
     return instance ? instance : new DbConnect();
   }
 
-    async verificarUtilizador(email) {
-        try {
-            return new Promise((resolve, reject) => {
-                let query = 'SELECT id, nome, email, pass FROM utilizador WHERE email = ?';
-    
-                con.query(query, email, (err, result) => {
-                    if (err) {
-                        reject(new Error(err.message));
-                    } else {
-                        resolve(result.length > 0 ? result : null);
-                    }
-                });
-            });
-        } catch (error) {
-          return error;
-        }
-    }
+  async verificarUtilizador(email) {
+    try {
+      return new Promise((resolve, reject) => {
+        let query =
+          "SELECT id, nome, email, pass FROM utilizador WHERE email = ?";
 
-    async verificarUtilizadorID(id) {
-      try {
-          return new Promise((resolve, reject) => {
-              let query = 'SELECT id, nome, email, pass FROM utilizador WHERE id = ?';
-  
-              con.query(query, id, (err, result) => {
-                  if (err) {
-                      reject(new Error(err.message));
-                  } else {
-                      resolve(result.length > 0 ? result : null);
-                  }
-              });
-          });
-      } catch (error) {
-          return error;
-      }
+        con.query(query, email, (err, result) => {
+          if (err) {
+            reject(new Error(err.message));
+          } else {
+            resolve(result.length > 0 ? result : null);
+          }
+        });
+      });
+    } catch (error) {
+      return error;
+    }
   }
 
-    async registarUtilizador(object) {
-        try {
-            return await new Promise((resolve, reject) => {
+  async verificarUtilizadorID(id) {
+    try {
+      return new Promise((resolve, reject) => {
+        let query = "SELECT id, nome, email, pass FROM utilizador WHERE id = ?";
 
-              let query = "insert into utilizador(nome,email,pass) values (?)"
-              let convertedObject = [[object.nome,object.email,object.pass]]
-
-              con.query(query, convertedObject, (err, result) => {
-                if (err) {
-                  reject(new Error(err.message));
-                } else {
-                  resolve(result);
-                }
-              });
-            });
-
-        } catch (error) {
-            console.log(error);
-        }
+        con.query(query, id, (err, result) => {
+          if (err) {
+            reject(new Error(err.message));
+          } else {
+            resolve(result.length > 0 ? result : null);
+          }
+        });
+      });
+    } catch (error) {
+      return error;
     }
+  }
 
+  async registarUtilizador(object) {
+    try {
+      return await new Promise((resolve, reject) => {
+        let query = "insert into utilizador(nome,email,pass) values (?)";
+        let convertedObject = [[object.nome, object.email, object.pass]];
+
+        con.query(query, convertedObject, (err, result) => {
+          if (err) {
+            reject(new Error(err.message));
+          } else {
+            resolve(result);
+          }
+        });
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   async movimentosUtilizador(id) {
     try {
@@ -99,15 +97,15 @@ class DbConnect {
       return result;
     } catch (error) {
       console.error(error);
-      throw error; 
+      throw error;
     }
   }
 
   async apagarMovimento(id_utilizador) {
     let result = await new Promise((resolve, reject) => {
-      let query = 'DELETE FROM movimento WHERE id = ?';
+      let query = "DELETE FROM movimento WHERE id = ?";
 
-      con.query(query, id_utilizador,  (error, results) => {
+      con.query(query, id_utilizador, (error, results) => {
         resolve(results);
       });
     });
@@ -116,33 +114,49 @@ class DbConnect {
   }
 
   async atualizarUtilizador(object) {
-        
     try {
-        return await new Promise((resolve, reject) => {
-
-            let query = `update utilizador set pass = '${object.pass}' where email = '${object.email}'`
-            console.log(query);
-            con.query(query,(err,result) => {
-                if (err) {
-                    reject(new Error(err.message));
-                } else {
-                    resolve(result);
-                }
-            })
-        })
-
+      return await new Promise((resolve, reject) => {
+        let query = `update utilizador set pass = '${object.pass}' where email = '${object.email}'`;
+        con.query(query, (err, result) => {
+          if (err) {
+            reject(new Error(err.message));
+          } else {
+            resolve(result);
+          }
+        });
+      });
     } catch (error) {
-        console.log("catch 3: "+error);
+      console.log("catch 3: " + error);
     }
-}
+  }
+
+  async atualizarMovimento(value, field, id) {
+    try {
+      return await new Promise((resolve, reject) => {
+        let query = `update movimento set ${field} = '${value}' where id = '${id}'`;
+        con.query(query, (err, result) => {
+          if (err) {
+            reject(new Error(err.message));
+          } else {
+            resolve(result);
+          }
+        });
+      });
+    } catch (error) {
+      console.log("catch: " + error);
+    }
+  }
 
   // DATA
 
   async saldoActual(id_utilizador) {
     let result = await new Promise((resolve, reject) => {
-      let sql = `SELECT ROUND(SUM(valor), 2) as total FROM movimento WHERE id_utilizador = ${id_utilizador} and data <= CURRENT_DATE();`;
+      let sql = `Select round((totalPositivo-totalNegativo),2) as SaldoAtual from (SELECT ROUND(SUM(valor), 2) as totalPositivo 
+      FROM movimento WHERE id_utilizador = ${id_utilizador} and tipo = 0) Income, 
+      (Select ROUND(SUM(valor), 2) as totalNegativo FROM movimento WHERE id_utilizador = ${id_utilizador} and tipo = 1 and data <= curdate()) Outcome;`;
 
-      con.query(sql,  (error, results) => {
+      con.query(sql, (error, results) => {
+        
         resolve(results);
       });
     });
@@ -154,12 +168,12 @@ class DbConnect {
     let result = await new Promise((resolve, reject) => {
       let sql = `SELECT id, descricao, valor, data, tipo 
     from movimento 
-    WHERE id_utilizador = ${id_utilizador} and data <= CURRENT_DATE()
+    WHERE id_utilizador = ${id_utilizador}
+    and data <= curdate()
     order by data desc
     limit 10;`;
 
       con.query(sql, (error, results) => {
-
         resolve(results);
       });
     });
@@ -188,7 +202,7 @@ class DbConnect {
     let result = await new Promise((resolve, reject) => {
       let sql = `select id, data, valor, descricao, tipo
         from movimento
-        where fixo = 0 and data <= CURRENT_DATE()
+        where fixo = 0
         and id_utilizador = ${id_utilizador}
         order by data desc;`;
 
@@ -205,10 +219,10 @@ class DbConnect {
       let sql = `select categoria, id from categoria;`;
 
       con.query(sql, (error, results) => {
-          resolve(results);
-        });
+        resolve(results);
+      });
     });
-    
+
     return result;
   }
 
@@ -243,12 +257,10 @@ class DbConnect {
   }
 
   async proximasDespesas(id_utilizador) {
-
     let result = await new Promise((resolve, reject) => {
-      let sql = `select id, data, valor, descricao
+      let sql = `select data, valor, descricao, tipo
         from movimento
-        where fixo = 0
-        and data > CURRENT_DATE()
+        where fixo = 1
         and id_utilizador = ${id_utilizador}
         order by data;`;
 
@@ -262,7 +274,7 @@ class DbConnect {
 
   async despesasFixasMensais(id_utilizador) {
     let result = await new Promise((resolve, reject) => {
-      let sql = `select id, data, valor, descricao, tipo
+      let sql = `select data, valor, descricao, tipo
         from movimento
         where fixo = 1
         and id_utilizador = ${id_utilizador}
@@ -278,30 +290,7 @@ class DbConnect {
 
   async novaCategoria(name) {
     let result = await new Promise((resolve, reject) => {
-      let sql = `insert into categoria
-    (
-    categoria
-    ) values
-    (
-    "${name}"
-    )`;
-
-      con.query(sql, (error, results) => {
-        resolve(results);
-      });
-    });
-
-    return result;
-  }
-
-  async despesasMensais(id_utilizador) {
-    let result = await new Promise((resolve, reject) => {
-      let sql = `select sum(valor) as valor, c.categoria
-        from movimento m
-        join categoria c 
-        on m.id_categoria = c.id_categoria
-        where id_utilizador = ${id_utilizador}
-        group by c.categoria;`;
+      let sql = `insert into categoria(categoria) values("${name}")`;
 
       con.query(sql, (error, results) => {
         resolve(results);
@@ -331,7 +320,7 @@ class DbConnect {
       from movimento m, categoria c
       where m.id_categoria = c.id
       and m.id_utilizador = ${id_utilizador}
-      and month(m.data) = '${dataActual.getMonth()+1}'
+      and month(m.data) = '${dataActual.getMonth() + 1}'
       and year(m.data) = '${dataActual.getFullYear()}'
       group by c.categoria;`;
 
@@ -367,12 +356,17 @@ class DbConnect {
   async maioresGastos(id_utilizador) {
     const dataActual = new Date();
     let result = await new Promise((resolve, reject) => {
-      let sql = `select round(m.valor, 2) as valor, m.descricao
+      let sql = `select round(sum(m.valor), 2) as valor, c.categoria
       from movimento m
-      where year(m.data) = '${dataActual.getFullYear()}'
-      and id_utilizador = ${id_utilizador}
-      order by m.valor desc
-      limit 10;`;
+      join categoria c
+      on m.id_categoria = c.id
+      where year(m.data) = '2023'
+      and m.id_utilizador = ${id_utilizador}
+      and m.tipo = 1
+	    group by m.id_categoria
+      order by valor desc
+      limit 10
+      ;`;
 
       con.query(sql, (error, results) => {
         resolve(results);
@@ -401,18 +395,37 @@ class DbConnect {
     return result;
   }
 
-
   async percentagensAnuais(id_utilizador) {
     const dataActual = new Date();
     let result = await new Promise((resolve, reject) => {
       let sql = `select c.categoria as name, round(sum(m.valor)*100/a.total, 2) as percentage
-      from categoria c, movimento m, (select round(sum(m.valor), 2) as total from movimento m where year(m.data) = '${dataActual.getFullYear()}' and m.id_utilizador = ${id_utilizador}) a
+      from categoria c, movimento m, (select round(sum(m.valor), 2) as total from movimento m where year(m.data) = '${dataActual.getFullYear()}' and m.id_utilizador = ${id_utilizador} and m.id_categoria != 21) a
       where c.id = m.id_categoria
       and m.id_utilizador = ${id_utilizador}
       and year(m.data) = '${dataActual.getFullYear()}'
+      and c.id != 21
       group by c.categoria, a.total;`;
 
-      console.log(sql)
+
+      con.query(sql, (error, results) => {
+        resolve(results);
+      });
+    });
+
+    return result;
+  }
+
+  async saldoPrevisto(id_utilizador) {
+    const dataActual = new Date();
+    let result = await new Promise((resolve, reject) => {
+      let sql = `Select round((rendimentos.valor - despesasFixas.valor), 2) as SaldoPrevisto from (Select round(sum(valor), 2) as valor
+      from movimento
+      where tipo = 1
+      and id_utilizador = ${id_utilizador}
+      and data >= curdate() and data <= last_day(date(concat_ws('-', '${dataActual.getFullYear()}', '${dataActual.getMonth()+1}', 1)))) despesasFixas, (Select round(sum(valor), 2) as valor from movimento where tipo = 0
+      and id_utilizador = ${id_utilizador} and data <= CURDATE()) rendimentos;`;
+
+      console.log(sql);
 
       con.query(sql, (error, results) => {
         resolve(results);

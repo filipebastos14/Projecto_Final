@@ -2,7 +2,7 @@ const express = require("express");
 const mysql = require("mysql");
 const expressLayouts = require("express-ejs-layouts");
 const userPath = "./models/user.json";
-const session = require('express-session');
+const session = require("express-session");
 
 const ejs = require("ejs");
 const path = require("path");
@@ -20,12 +20,13 @@ app.use(express.static("public"));
 app.use(expressLayouts);
 app.set("layout", "layout/main");
 
-app.use(session({
-  secret: 'fc22e0b3d3bb7872a7192e1c0184473c2e0b37e9c9b6590a47b697f97429e874',
-  resave: false,
-  saveUninitialized: true,
-}));
-
+app.use(
+  session({
+    secret: "fc22e0b3d3bb7872a7192e1c0184473c2e0b37e9c9b6590a47b697f97429e874",
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
 // Configuração do ejs
 app.set("view engine", "ejs");
@@ -40,9 +41,7 @@ const userModelFunctions = userModel.getUserInstance();
 
 //pagina de login
 app.get("/login", async (req, res) => {
-
   const userId = req.session.userId;
-  console.log("Request " + userId);
 
   if (!userId) {
     res.render("login/login", { layout: "layout/visitor" });
@@ -52,23 +51,21 @@ app.get("/login", async (req, res) => {
 });
 
 // pagina de registo
-app.get('/register', async (req,res) => {
-    const userId = req.session.userId;
-    console.log("Request " + userId);
+app.get("/register", async (req, res) => {
+  const userId = req.session.userId;
 
-    if (!userId) {
-        res.render('login/newUser', {layout: 'layout/visitor'})
-    } else {
-        res.redirect('/');
-    }
-})
+  if (!userId) {
+    res.render("login/newUser", { layout: "layout/visitor" });
+  } else {
+    res.redirect("/");
+  }
+});
 
 // pagina de recuperação
 app.get("/reset", async (req, res) => {
-    const userId = req.session.userId;
-    console.log("Request " + userId);
+  const userId = req.session.userId;
 
-    if (!userId) {
+  if (!userId) {
     res.render("login/recoverPassword", { layout: "layout/visitor" });
   } else {
     res.redirect("user_account/index");
@@ -76,120 +73,121 @@ app.get("/reset", async (req, res) => {
 });
 
 // Homepage
-app.get('/', async (req, res) => {
+app.get("/", async (req, res) => {
+  const userId = req.session.userId;
 
-    const userId = req.session.userId;
-    console.log("Request " + userId);
-
-    if (!userId) {
-        res.redirect('/login')
-    } else {
-      userOutput = await userModelFunctions.userInfo(userId)
-      console.log(userOutput);
-      res.render('user_account/index', userOutput);
-    } 
-})
+  if (!userId) {
+    res.redirect("/login");
+  } else {
+    userOutput = await userModelFunctions.userInfo(userId);
+    res.render("user_account/index", userOutput);
+  }
+});
 
 // Página detalhes da conta
 app.get("/detalhes", async (req, res) => {
-    const userId = req.session.userId;
-    console.log("Request " + userId);
+  const userId = req.session.userId;
 
-    if (!userId) {
+  if (!userId) {
     res.redirect("/login");
   } else {
-    userOutput = await userModelFunctions.userInfo(userId)
+    userOutput = await userModelFunctions.userInfo(userId);
     res.render("user_account/accountsDetails", userOutput);
   }
 });
 
 // Página de categorias/estatisticas
 app.get("/categorias", async (req, res) => {
-    const userId = req.session.userId; 
-    console.log("Request " + userId);
+  const userId = req.session.userId;
 
-    if (!userId) {
+  if (!userId) {
     res.redirect("/login");
   } else {
-    userOutput = await userModelFunctions.userInfo(userId)
+    userOutput = await userModelFunctions.userInfo(userId);
     res.render("user_account/categories", userOutput);
   }
 });
 
 // pagina de movimentos
 app.get("/movimentos", async (req, res) => {
-    // const userId = req.session.userId; Ativar após teste
-    userId = 14
-    console.log("Request " + userId);
+  const userId = req.session.userId;
 
-    if (!userId) {
+  if (!userId) {
     res.redirect("/login");
   } else {
-    userOutput = await userModelFunctions.userInfo(userId)
+    userOutput = await userModelFunctions.userInfo(userId);
     res.render("user_account/movements", userOutput);
   }
 });
 
-app.post('/user/new', async (req,res) => {
-    try {
-        let object = req.body;
+app.get("/movimentos/:id/update/:value/:field", async (req, res) => {
+  const userId = req.session.userId;
 
-        const result = await db.verificarUtilizador(object.email)
+  if (!userId) {
+    res.redirect("/login");
+  } else {
+    userOutput = await userModelFunctions.userInfo(userId);
 
-        if (result != null) {
-            // Mensagem de conflito
-            res.status(409).json({ error: 'Este email já está registado, registe-se com outro email ou faça login' });
-        } else {
-            // Procede com registo
-            await db.registarUtilizador(object);
-            res.redirect('/login');
-        }
+    db.atualizarMovimento(req.params.value, req.params.value, req.params.field);
+    res.render("user_account/movements", userOutput);
+  }
+});
 
-        } catch (error) {
-            console.error('Error:', error);
-            res.status(500).json({ error: 'Internal Server Error' });
-        }
-})
+app.post("/user/new", async (req, res) => {
+  try {
+    let object = req.body;
 
+    const result = await db.verificarUtilizador(object.email);
 
-app.get('/user/login', async (req,res) => {
-    try {
-        const email = req.query.email;
-        const pass = req.query.pass;
-
-      let result = await db.verificarUtilizador(email);
-
-        if (result != null) {
-            const user = result[0];
-            console.log(user);
-
-            // compara email e pass com resultados da query
-            if (user.pass == pass) {
-
-            // se corresponder
-            const userId = user.id;
-
-            console.log("userId:" + userId);
-
-            req.session.userId = userId;
-
-            res.json({ success: true, userId: userId });
-                   
-            } else {
-                // se dados não corresponderem 
-                console.log("Email ou pass incorretos");
-                res.status(401).json({ error: "Email ou pass incorretos" });
-            }
-
-        } else {
-          res.status(409).json({ error: "Utilizador não encontrado" });
-        }
-        
-    } catch (error) {
-        console.log(error);
-        res.status(500).json({ error: 'Internal Server Error' });
+    if (result != null) {
+      // Mensagem de conflito
+      res
+        .status(409)
+        .json({
+          error:
+            "Este email já está registado, registe-se com outro email ou faça login",
+        });
+    } else {
+      // Procede com registo
+      await db.registarUtilizador(object);
+      res.redirect("/login");
     }
-})
+  } catch (error) {
+    console.error("Error:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+app.get("/user/login", async (req, res) => {
+  try {
+    const email = req.query.email;
+    const pass = req.query.pass;
+
+    let result = await db.verificarUtilizador(email);
+
+    if (result != null) {
+      const user = result[0];
+
+      // compara email e pass com resultados da query
+      if (user.pass == pass) {
+        // se corresponder
+        const userId = user.id;
+
+        req.session.userId = userId;
+
+        res.json({ success: true, userId: userId });
+      } else {
+        // se dados não corresponderem
+        res.status(401).json({ error: "Email ou pass incorretos" });
+      }
+    } else {
+      res.status(409).json({ error: "Utilizador não encontrado" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
 
 app.post("/user/reset", async (req, res) => {
   try {
@@ -198,49 +196,43 @@ app.post("/user/reset", async (req, res) => {
     let result = await db.verificarUtilizador(object["email"]);
 
     if (result != null) {
-        await db.atualizarUtilizador(object);
-        console.log('atualizado');
+      await db.atualizarUtilizador(object);
 
-        res.redirect('/login')
+      res.redirect("/login");
     } else {
-      console.log('Não encontrado');
-      res.status(409).json({ error: 'Utilizador não encontrado' });
+      res.status(409).json({ error: "Utilizador não encontrado" });
     }
-    
-} catch (error) {
+  } catch (error) {
     console.log(error);
-    res.status(500).json({ error: 'Internal Server Error' });
-}
+    res.status(500).json({ error: "Internal Server Error" });
+  }
 });
-
 
 app.get("/logout", async (req, res) => {
   try {
     req.session.destroy((err) => {
       if (err) {
-        console.error('Error destroying session:', err);
-        return res.status(500).send('Internal Server Error');
+        console.error("Error destroying session:", err);
+        return res.status(500).send("Internal Server Error");
       }
-  
-      res.redirect('/login');;
-    })
+
+      res.redirect("/login");
+    });
   } catch (error) {
     console.log(error);
   }
 });
 
-app.post('/delete-movement/:id', (req, res) => {
-
+app.post("/delete-movement/:id", (req, res) => {
   try {
     const movimentoId = parseInt(req.params.id);
 
-    const resultado = db.apagarMovimento(movimentoId)
+    const resultado = db.apagarMovimento(movimentoId);
 
-    res.redirect('/movimentos')
+    res.redirect("/movimentos");
   } catch (error) {
-    res.status(500).json({ error: 'Internal Server Error' }); 
+    res.status(500).json({ error: "Internal Server Error" });
   }
-  
 });
 
 // DATA
@@ -304,7 +296,7 @@ app.get("/despesasFixasMensais", async (req, res) => {
 });
 
 app.post("/novaCategoria", async (req, res) => {
-  let result = await db.novaCategoria(req.body.name);
+  let result = await db.novaCategoria(req.query.name);
 
   res.send(result);
 });
@@ -317,12 +309,6 @@ app.get("/despesasMensais", async (req, res) => {
 
 app.get("/detalhesConta", async (req, res) => {
   let result = await db.detalhesConta(req.query.userId);
-
-  res.send(result);
-});
-
-app.get("/despesasMensais", async (req, res) => {
-  let result = await db.despesasMensais(req.query.userId);
 
   res.send(result);
 });
@@ -346,10 +332,16 @@ app.get("/rendimentosMensais", async (req, res) => {
 });
 
 app.get("/percentagensAnuais", async (req, res) => {
-    let result = await db.percentagensAnuais(req.query.userId);
-  
-    res.send(result);
-  });
+  let result = await db.percentagensAnuais(req.query.userId);
+
+  res.send(result);
+});
+
+app.get("/saldoPrevisto", async (req, res) => {
+  let result = await db.saldoPrevisto(req.query.userId);
+
+  res.send(result);
+});
 
 app.listen(port, () => {
   console.log("Connected");

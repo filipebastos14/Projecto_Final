@@ -3,7 +3,6 @@ const resetBtn = document.querySelector('#reset-submit');
 
 resetBtn.addEventListener('click', async (e) => {
     try {
-        console.log('clicado');
         e.preventDefault();
         let form = new FormData(formDataReset);
 
@@ -25,15 +24,12 @@ resetBtn.addEventListener('click', async (e) => {
                 'pass' : pass
             })
         })
-        console.log('Ainda não entrou');
         if (!response.ok) {
-            console.log('Entrou not okay');
             const errorData = await response.json();
             
             alert(`Error: ${errorData.error}`);
 
         } else {
-            console.log('Entrou okay');
 
             alert('Atualização bem-sucedida!');
 
