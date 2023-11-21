@@ -222,6 +222,14 @@ input, select, textarea{
     padding-top: 1rem;
 }
 
+.deleteMovement{
+    background-color: white;
+    color: rgb(32 79 122);
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1em;
+}
+
 /* Estatísticas */
 #categoryPercentage > div{
     background-color: var(--bg-color);

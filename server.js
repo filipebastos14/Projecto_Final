@@ -11,9 +11,12 @@ const port = 3000;
 const app = express();
 
 app.use(express.json());
-//app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.urlencoded({ extended: false }));
+
+// Pasta de ficheiros estáticos
 app.use(express.static("public"));
+
+// Definir main Layout
 app.use(expressLayouts);
 app.set("layout", "layout/main");
 
@@ -33,11 +36,7 @@ const DbConnect = require("./db/db");
 const db = DbConnect.getDbConnectInstance();
 
 const userModel = require("./controllers/userController");
-const { TextEncoderStream } = require("node:stream/web");
 const userModelFunctions = userModel.getUserInstance();
-
-const dateModel = require('./controllers/dateController');
-const dateModelFunctions = dateModel.getDateModelInstance()
 
 //pagina de login
 app.get("/login", async (req, res) => {
@@ -120,7 +119,7 @@ app.get("/categorias", async (req, res) => {
 // pagina de movimentos
 app.get("/movimentos", async (req, res) => {
     // const userId = req.session.userId; Ativar após teste
-    const userId = 14 // Apagar após teste
+    userId = 14
     console.log("Request " + userId);
 
     if (!userId) {
@@ -164,10 +163,10 @@ app.get('/user/login', async (req,res) => {
             const user = result[0];
             console.log(user);
 
-            // // compara email e pass com resultados da query
+            // compara email e pass com resultados da query
             if (user.pass == pass) {
 
-            //     // se corresponder
+            // se corresponder
             const userId = user.id;
 
             console.log("userId:" + userId);
@@ -192,33 +191,6 @@ app.get('/user/login', async (req,res) => {
     }
 })
 
-
-app.post("/mov/new", async (req, res) => {
-  try {
-    let object = req.body;
-
-    const result = await db.novoMovimento(object);
-
-    idMov = result.insertId;
-
-    let movimento = {
-      id: idMov,
-      categoria: parseInt(object["categoria"]) - 1,
-      valor: parseInt(object["valor"]),
-      data: object["data"],
-      descricao: object["descricao"],
-      tipo: parseInt(object["tipo"]),
-    };
-
-    userModelFunctions.adicionarMovimento(movimento);
-
-    res.json(result);
-  } catch (error) {
-    console.error("Error:", error);
-    res.status(500).json({ error: "Internal Server Error" });
-  }
-});
-
 app.post("/user/reset", async (req, res) => {
   try {
     object = req.body;
@@ -226,11 +198,13 @@ app.post("/user/reset", async (req, res) => {
     let result = await db.verificarUtilizador(object["email"]);
 
     if (result != null) {
-        const result2 = await db.atualizarUtilizador(object);
+        await db.atualizarUtilizador(object);
+        console.log('atualizado');
 
-        res.status(201).json(result2);
+        res.redirect('/login')
     } else {
-      res.status(409).json({ error: "Utilizador não encontrado" });
+      console.log('Não encontrado');
+      res.status(409).json({ error: 'Utilizador não encontrado' });
     }
     
 } catch (error) {
@@ -248,7 +222,6 @@ app.get("/logout", async (req, res) => {
         return res.status(500).send('Internal Server Error');
       }
   
-      // Redirect the user to the login page or any other page
       res.redirect('/login');;
     })
   } catch (error) {
@@ -256,15 +229,14 @@ app.get("/logout", async (req, res) => {
   }
 });
 
-app.delete('/delete-movement/:id', (req, res) => {
+app.post('/delete-movement/:id', (req, res) => {
 
   try {
     const movimentoId = parseInt(req.params.id);
 
-    // Find the index of the movement with the specified ID
     const resultado = db.apagarMovimento(movimentoId)
 
-    res.status(200).json({ success: true, message: 'Movimento apagado com sucesso' });
+    res.redirect('/movimentos')
   } catch (error) {
     res.status(500).json({ error: 'Internal Server Error' }); 
   }
