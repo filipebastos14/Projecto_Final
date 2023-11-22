@@ -4,18 +4,6 @@ const formData = document.querySelector("#adicionar-movimentos-div");
 const categorias = document.querySelector("#category-select");
 const tipoMovimento = document.querySelector("#tipoSelect");
 
-function atualizarMovimento(){
-  console.log('hi')
-
-  // axios({
-  //   method: "put",
-  //   url: `http://localhost:3000/movimentos/${id}/update/${value}/${field}`,
-  // }).then(function (response) {
-  //   // location.reload();
-  // });
-}
-
-
 axios({
   method: "get",
   url: `http://localhost:3000/getCategorias?userId=${user.id}`,
@@ -178,7 +166,7 @@ submitButtonCategory.addEventListener("click", (event) => {
     method: "post",
     url: `http://localhost:3000/novaCategoria?name=${categoryName.value}`,
   }).then(function (response) {
-    // location.reload();
+    location.reload();
   });
 });
 
