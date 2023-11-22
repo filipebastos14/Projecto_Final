@@ -343,6 +343,18 @@ app.get("/saldoPrevisto", async (req, res) => {
   res.send(result);
 });
 
+
+app.get("/*", async (req, res) => {
+  const userId = req.session.userId;
+
+  if (!userId) {
+    res.redirect("/login");
+  } else {
+    userOutput = await userModelFunctions.userInfo(userId);
+    res.render("user_account/404");
+  }
+});
+
 app.listen(port, () => {
   console.log("Connected");
 });

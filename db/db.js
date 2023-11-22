@@ -6,7 +6,7 @@ let instance = null;
 const con = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "route",
+  password: "",
   database: "projecto_final",
   port: "3306",
 });
@@ -151,7 +151,7 @@ class DbConnect {
 
   async saldoActual(id_utilizador) {
     let result = await new Promise((resolve, reject) => {
-      let sql = `Select round((totalPositivo-totalNegativo),2) as SaldoAtual from (SELECT ROUND(SUM(valor), 2) as totalPositivo 
+      let sql = `Select round((IFNULL(totalPositivo, 0) - IFNULL(totalNegativo, 0)),2) as SaldoAtual from (SELECT ROUND(SUM(valor), 2) as totalPositivo 
       FROM movimento WHERE id_utilizador = ${id_utilizador} and tipo = 0) Income, 
       (Select ROUND(SUM(valor), 2) as totalNegativo FROM movimento WHERE id_utilizador = ${id_utilizador} and tipo = 1 and data <= curdate()) Outcome;`;
 
@@ -418,7 +418,7 @@ class DbConnect {
   async saldoPrevisto(id_utilizador) {
     const dataActual = new Date();
     let result = await new Promise((resolve, reject) => {
-      let sql = `Select round((rendimentos.valor - despesasFixas.valor), 2) as SaldoPrevisto from (Select round(sum(valor), 2) as valor
+      let sql = `Select round((IFNULL(rendimentos.valor, 0) - IFNULL(despesasFixas.valor, 0)), 2) as SaldoPrevisto from (Select round(sum(valor), 2) as valor
       from movimento
       where tipo = 1
       and id_utilizador = ${id_utilizador}
